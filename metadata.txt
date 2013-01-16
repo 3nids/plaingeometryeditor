@@ -1,0 +1,21 @@
+# This file contains metadata for your plugin. Beginning
+# with version 1.8 this is the preferred way to supply information about a
+# plugin. The current method of embedding metadata in __init__.py will
+# be supported until version 2.0
+
+# This file should be included when you package your plugin.
+
+[general]
+name=Plain Geometry Editor
+description=Edit geometry of features using WKT
+version=1.0.0
+qgisMinimumVersion=1.7
+
+icon=icons/plaingeometryeditor-32.png
+tags=geometry,wkt
+homepage=https://github.com/3nids/plaingeometryeditor/wiki
+tracker=https://github.com/3nids/plaingeometryeditor/issues
+repository=https://github.com/plaingeometryeditor/
+[author]
+name=Denis Rouzaud
+email=denis.rouzaud@gmail.com
