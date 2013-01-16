@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_geomeditor.ui'
 #
-# Created: Wed Jan 16 15:12:18 2013
+# Created: Wed Jan 16 15:42:13 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -36,6 +36,8 @@ class Ui_GeomEditor(object):
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 2, 0, 1, 1)
         self.validityStatusLabel = QtGui.QLabel(GeomEditor)
+        self.validityStatusLabel.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.validityStatusLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.validityStatusLabel.setObjectName(_fromUtf8("validityStatusLabel"))
         self.gridLayout.addWidget(self.validityStatusLabel, 0, 1, 1, 2)
 
@@ -47,5 +49,5 @@ class Ui_GeomEditor(object):
         self.sketchBox.setText(QtGui.QApplication.translate("GeomEditor", "Sketch on map", None, QtGui.QApplication.UnicodeUTF8))
         self.resetButton.setText(QtGui.QApplication.translate("GeomEditor", "Reset", None, QtGui.QApplication.UnicodeUTF8))
         self.applyButton.setText(QtGui.QApplication.translate("GeomEditor", "Apply", None, QtGui.QApplication.UnicodeUTF8))
-        self.validityStatusLabel.setText(QtGui.QApplication.translate("GeomEditor", "status", None, QtGui.QApplication.UnicodeUTF8))
+        self.validityStatusLabel.setText(QtGui.QApplication.translate("GeomEditor", "valid", None, QtGui.QApplication.UnicodeUTF8))
 
