@@ -15,7 +15,7 @@ def version():
 def icon():
     return "icons/plaingeometryeditor-32.png"
 def qgisMinimumVersion():
-    return "1.7"
+    return "1.8"
 def classFactory(iface):
     from plaingeometryeditor import PlainGeometryEditor
     return PlainGeometryEditor(iface)
