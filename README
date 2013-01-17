@@ -1,5 +1,13 @@
 ## What ? 
 
-Plain Geometry Editor is a [QGIS](http://www.qgis.org) plugin to edit geometry of features using WKT (well-known text). 
+Plain Geometry Editor is a [QGIS](http://www.qgis.org) plugin to edit geometry of features using WKT (well-known text).
+
+## How ?
+
+Select the layer you want to edit, and turn editing on. 
+Click then on the compasses icon to identify a feature. 
+If a feature is found, a dialog with a text area containing the WKT of the feature can be edited.
+Changes can only be applied if the new geometry is valid!
+ 
 
 

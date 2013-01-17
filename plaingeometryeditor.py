@@ -22,16 +22,17 @@ class PlainGeometryEditor():
 
 	def __init__(self, iface):
 		self.iface = iface
+		self.geomEditorDlg = geomEditor(self.iface)
 	
 	def initGui(self):
-		self.geomEditAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/plaingeometryeditor-32.png"), "Edit geometry", self.iface.mainWindow())
+		self.geomEditAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/plaingeometryeditor-32.png"), "Plain Geometry Editor", self.iface.mainWindow())
 		self.geomEditAction.setCheckable(True)
 		QObject.connect(self.geomEditAction, SIGNAL("triggered()"), self.geomEditInitTool)
 		self.iface.addToolBarIcon(self.geomEditAction)
-		self.iface.addPluginToMenu("&WKT Edit", self.geomEditAction)
+		self.iface.addPluginToMenu("&Plain Geometry Editor", self.geomEditAction)
 				
 	def unload(self):
-		self.iface.removePluginMenu("&WKT Edit",self.geomEditAction)
+		self.iface.removePluginMenu("&Plain Geometry Editor",self.geomEditAction)
 		self.iface.removeToolBarIcon(self.geomEditAction)
 		
 	def geomEditInitTool(self):
@@ -51,5 +52,6 @@ class PlainGeometryEditor():
 		self.iface.mapCanvas().unsetMapTool(self.geomEdit)
 		
 	def editGeometry(self, layer, feature):
-		dlg = geomEditor(self.iface, layer, feature)
-		dlg.exec_()
+		self.geomEditorDlg.setup(layer, feature)
+		self.geomEditorDlg.show()
+

@@ -11,7 +11,7 @@ def name():
 def description():
     return "Edit geometry of features using WKT"
 def version():
-    return "Version 1.0.0"
+    return "Version 1.0"
 def icon():
     return "icons/plaingeometryeditor-32.png"
 def qgisMinimumVersion():

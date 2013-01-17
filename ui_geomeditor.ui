@@ -6,42 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>451</width>
-    <height>367</height>
+    <width>429</width>
+    <height>431</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Plain Geometry Editor</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QCheckBox" name="sketchBox">
-     <property name="text">
-      <string>Sketch on map</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="resetButton">
-     <property name="text">
-      <string>Reset</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2">
+   <item row="2" column="3">
     <widget class="QPushButton" name="applyButton">
      <property name="text">
       <string>Apply</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="3">
-    <widget class="QTextEdit" name="wktText"/>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="resetButton">
+     <property name="text">
+      <string>Reset</string>
+     </property>
+    </widget>
    </item>
-   <item row="2" column="0">
+   <item row="2" column="1">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -54,16 +41,16 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="1" colspan="2">
-    <widget class="QLabel" name="validityStatusLabel">
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
+   <item row="1" column="0" colspan="4">
+    <widget class="QTextEdit" name="wktText"/>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QCheckBox" name="sketchBox">
      <property name="text">
-      <string>valid</string>
+      <string>Sketch on map</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
