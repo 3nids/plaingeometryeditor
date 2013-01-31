@@ -13,8 +13,8 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
 
-from identifygeometry import identifyGeometry
-from geomeditor import geomEditor
+from identifygeometry import IdentifyGeometry
+from geomeditordialog import GeomEditorDialog
 
 import resources
 
@@ -22,7 +22,6 @@ class PlainGeometryEditor():
 
 	def __init__(self, iface):
 		self.iface = iface
-		self.geomEditorDlg = geomEditor(self.iface)
 	
 	def initGui(self):
 		self.geomEditAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/plaingeometryeditor-32.png"), "Plain Geometry Editor", self.iface.mainWindow())
@@ -41,7 +40,7 @@ class PlainGeometryEditor():
 			canvas.unsetMapTool(self.geomEdit)
 			return
 		self.geomEditAction.setChecked( True )
-		self.geomEdit = identifyGeometry(canvas)
+		self.geomEdit = IdentifyGeometry(canvas)
 		QObject.connect(self.geomEdit , SIGNAL("geomIdentified") , self.editGeometry ) 
 		canvas.setMapTool(self.geomEdit)
 		QObject.connect( canvas, SIGNAL( "mapToolSet(QgsMapTool *)" ), self.mapToolChanged)
@@ -52,6 +51,6 @@ class PlainGeometryEditor():
 		self.iface.mapCanvas().unsetMapTool(self.geomEdit)
 		
 	def editGeometry(self, layer, feature):
-		self.geomEditorDlg.setup(layer, feature)
-		self.geomEditorDlg.show()
+		dlg = GeomEditorDialog(self.iface, layer, feature)
+		dlg.show()
 
