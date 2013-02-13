@@ -44,8 +44,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor ):
 			pass
 
 		self.displayCombo.setCurrentIndex(1)
-		
-		self.rubberSettingsFrame.setVisible(False)
+
 		QObject.connect(self , SIGNAL( "finished(int)" ) , self.finish )
 		QObject.connect(self.applyButton, SIGNAL( "clicked()" ) , self.applyGeometry )
 		QObject.connect(self.sketchBox  , SIGNAL( "clicked()" ) , self.geomChanged )	
