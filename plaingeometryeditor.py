@@ -24,31 +24,31 @@ class PlainGeometryEditor():
 		self.iface = iface
 	
 	def initGui(self):
-		self.geomEditAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/plaingeometryeditor-32.png"), "Plain Geometry Editor", self.iface.mainWindow())
-		self.geomEditAction.setCheckable(True)
-		QObject.connect(self.geomEditAction, SIGNAL("triggered()"), self.geomEditInitTool)
-		self.iface.addToolBarIcon(self.geomEditAction)
-		self.iface.addPluginToMenu("&Plain Geometry Editor", self.geomEditAction)
+		self.mapToolAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/plaingeometryeditor-32.png"), "Plain Geometry Editor", self.iface.mainWindow())
+		self.mapToolAction.setCheckable(True)
+		QObject.connect(self.mapToolAction, SIGNAL("triggered()"), self.mapToolInit)
+		self.iface.addToolBarIcon(self.mapToolAction)
+		self.iface.addPluginToMenu("&Plain Geometry Editor", self.mapToolAction)
 				
 	def unload(self):
-		self.iface.removePluginMenu("&Plain Geometry Editor",self.geomEditAction)
-		self.iface.removeToolBarIcon(self.geomEditAction)
+		self.iface.removePluginMenu("&Plain Geometry Editor",self.mapToolAction)
+		self.iface.removeToolBarIcon(self.mapToolAction)
 		
-	def geomEditInitTool(self):
+	def mapToolInit(self):
 		canvas = self.iface.mapCanvas()
-		if self.geomEditAction.isChecked() is False:
-			canvas.unsetMapTool(self.geomEdit)
+		if self.mapToolAction.isChecked() is False:
+			canvas.unsetMapTool(self.mapTool)
 			return
-		self.geomEditAction.setChecked( True )
-		self.geomEdit = IdentifyGeometry(canvas)
-		QObject.connect(self.geomEdit , SIGNAL("geomIdentified") , self.editGeometry ) 
-		canvas.setMapTool(self.geomEdit)
+		self.mapToolAction.setChecked( True )
+		self.mapTool = IdentifyGeometry(canvas)
+		QObject.connect(self.mapTool , SIGNAL("geomIdentified") , self.editGeometry ) 
+		canvas.setMapTool(self.mapTool)
 		QObject.connect( canvas, SIGNAL( "mapToolSet(QgsMapTool *)" ), self.mapToolChanged)
 		
 	def mapToolChanged(self, tool):
 		QObject.disconnect( self.iface.mapCanvas(), SIGNAL( "mapToolSet(QgsMapTool *)" ), self.mapToolChanged)
-		self.geomEditAction.setChecked( False )
-		self.iface.mapCanvas().unsetMapTool(self.geomEdit)
+		self.mapToolAction.setChecked( False )
+		self.iface.mapCanvas().unsetMapTool(self.mapTool)
 		
 	def editGeometry(self, layer, feature):
 		dlg = GeomEditorDialog(self.iface, layer, feature)

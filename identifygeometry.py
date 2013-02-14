@@ -53,7 +53,6 @@ class IdentifyGeometry(QgsMapToolIdentify):
 				for f in subset:
 					idx.insertFeature(f)
 				nearest = idx.nearestNeighbor( point, 1 )
-				print nearest
 				layer.featureAtId(nearest[0],f, True, False)
 			self.emit( SIGNAL( "geomIdentified" ), layer, f)			
 			
