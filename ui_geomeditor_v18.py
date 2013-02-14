@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_geomeditor_v18.ui'
 #
-# Created: Thu Feb 14 16:21:04 2013
+# Created: Thu Feb 14 16:24:23 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,10 +26,9 @@ class Ui_GeomEditor(object):
         self.rubberSettingsFrame.setObjectName(_fromUtf8("rubberSettingsFrame"))
         self.gridLayout_5 = QtGui.QGridLayout(self.rubberSettingsFrame)
         self.gridLayout_5.setObjectName(_fromUtf8("gridLayout_5"))
-        self.checkBox = QtGui.QCheckBox(self.rubberSettingsFrame)
-        self.checkBox.setChecked(True)
-        self.checkBox.setObjectName(_fromUtf8("checkBox"))
-        self.gridLayout_5.addWidget(self.checkBox, 1, 0, 1, 1)
+        self.spinBox_2 = QtGui.QSpinBox(self.rubberSettingsFrame)
+        self.spinBox_2.setObjectName(_fromUtf8("spinBox_2"))
+        self.gridLayout_5.addWidget(self.spinBox_2, 1, 3, 1, 1)
         self.toolButton_2 = QtGui.QToolButton(self.rubberSettingsFrame)
         self.toolButton_2.setText(_fromUtf8(""))
         self.toolButton_2.setObjectName(_fromUtf8("toolButton_2"))
@@ -44,13 +43,17 @@ class Ui_GeomEditor(object):
         self.spinBox = QtGui.QSpinBox(self.rubberSettingsFrame)
         self.spinBox.setObjectName(_fromUtf8("spinBox"))
         self.gridLayout_5.addWidget(self.spinBox, 0, 3, 1, 1)
-        self.spinBox_2 = QtGui.QSpinBox(self.rubberSettingsFrame)
-        self.spinBox_2.setObjectName(_fromUtf8("spinBox_2"))
-        self.gridLayout_5.addWidget(self.spinBox_2, 1, 3, 1, 1)
         self.toolButton_4 = QtGui.QToolButton(self.rubberSettingsFrame)
         self.toolButton_4.setText(_fromUtf8(""))
         self.toolButton_4.setObjectName(_fromUtf8("toolButton_4"))
         self.gridLayout_5.addWidget(self.toolButton_4, 1, 1, 1, 1)
+        self.checkBox = QtGui.QCheckBox(self.rubberSettingsFrame)
+        self.checkBox.setChecked(True)
+        self.checkBox.setObjectName(_fromUtf8("checkBox"))
+        self.gridLayout_5.addWidget(self.checkBox, 1, 4, 1, 1)
+        self.label_3 = QtGui.QLabel(self.rubberSettingsFrame)
+        self.label_3.setObjectName(_fromUtf8("label_3"))
+        self.gridLayout_5.addWidget(self.label_3, 1, 0, 1, 1)
         self.gridLayout_4.addWidget(self.rubberSettingsFrame, 4, 0, 1, 1)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_4.addItem(spacerItem, 4, 1, 1, 1)
@@ -140,8 +143,9 @@ class Ui_GeomEditor(object):
 
     def retranslateUi(self, GeomEditor):
         GeomEditor.setWindowTitle(QtGui.QApplication.translate("GeomEditor", "Plain Geometry Editor", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("GeomEditor", "Line style", None, QtGui.QApplication.UnicodeUTF8))
         self.checkBox.setText(QtGui.QApplication.translate("GeomEditor", "sketch current point", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("GeomEditor", "Sketch geometry", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("GeomEditor", "Point style", None, QtGui.QApplication.UnicodeUTF8))
         self.copyButton.setText(QtGui.QApplication.translate("GeomEditor", "Copy to clipbaord", None, QtGui.QApplication.UnicodeUTF8))
         self.resetButton.setText(QtGui.QApplication.translate("GeomEditor", "Reset", None, QtGui.QApplication.UnicodeUTF8))
         self.applyButton.setText(QtGui.QApplication.translate("GeomEditor", "Apply", None, QtGui.QApplication.UnicodeUTF8))
