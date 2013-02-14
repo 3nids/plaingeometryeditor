@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_geomeditor.ui'
 #
-# Created: Thu Feb 14 16:21:04 2013
+# Created: Thu Feb 14 16:24:23 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
