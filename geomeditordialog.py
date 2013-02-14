@@ -12,7 +12,11 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-from ui_geomeditor import Ui_GeomEditor
+try:
+	from ui_geomeditor import Ui_GeomEditor
+except:
+	from ui_geomeditor_v18 import Ui_GeomEditor
+	
 
 from geomeditors.celleditor import CellEditor
 from geomeditors.wkteditor import WktEditor
@@ -38,6 +42,13 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor ):
 		self.featureRubber = QgsRubberBand( iface.mapCanvas() )
 		self.currentPointRubber = QgsRubberBand( iface.mapCanvas() )
 		self.currentPointRubber.setWidth(10)
+		# qgis < 1.9
+		# hide the geometry panel
+		try:
+			self.rubberSettingsFrame.setVisible(False)
+		except:
+			pass
+			
 		try:
 			self.currentPointRubber.setIconSize(10)
 		except:
