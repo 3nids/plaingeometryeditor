@@ -39,9 +39,6 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor ):
 		if not self.geomType in (QGis.Point, QGis.Line, QGis.Polygon):
 			print self.close()
 			return
-		self.featureRubber = QgsRubberBand( iface.mapCanvas() )
-		self.currentPointRubber = QgsRubberBand( iface.mapCanvas() )
-		self.currentPointRubber.setWidth(10)
 		# qgis < 1.9
 		# hide the geometry panel
 		try:
@@ -49,13 +46,17 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor ):
 		except:
 			pass
 			
+		self.featureRubber = QgsRubberBand( iface.mapCanvas() )
+		self.currentPointRubber = QgsRubberBand( iface.mapCanvas() )
+		self.currentPointRubber.setWidth(10)
 		try:
 			self.currentPointRubber.setIconSize(10)
 		except:
 			pass
-
+			
 		self.displayCombo.setCurrentIndex(1)
 
+		# GUI stuff
 		QObject.connect(self , SIGNAL( "finished(int)" ) , self.finish )
 		QObject.connect(self.applyButton, SIGNAL( "clicked()" ) , self.applyGeometry )
 		QObject.connect(self.sketchBox  , SIGNAL( "clicked()" ) , self.geomChanged )	
@@ -69,7 +70,10 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor ):
 			self.featureEdit.setText( feature.attribute( layer.displayField() ).toString() )
 		except: # qgis <1.9
 			self.featureEdit.setText( "%s" % feature.id() )
+			
+		# write geometry in text edit
 		self.getEditor().setGeom( self.initialGeom )
+
 
 	def getEditor(self):
 		idx = self.displayCombo.currentIndex()
@@ -124,7 +128,6 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor ):
 			self.displayCombo.setEnabled( False )
 			geomStatus = "invalid"
 
-		print bgColor
 		p = self.geomTextEdit.palette()
 		p.setColor( QPalette.Base, QColor( bgColor ) )
 		self.geomTextEdit.setPalette(p)

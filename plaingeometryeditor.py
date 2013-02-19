@@ -44,6 +44,7 @@ class PlainGeometryEditor():
 		QObject.connect(self.mapTool , SIGNAL("geomIdentified") , self.editGeometry ) 
 		canvas.setMapTool(self.mapTool)
 		QObject.connect( canvas, SIGNAL( "mapToolSet(QgsMapTool *)" ), self.mapToolChanged)
+		canvas.mapToolSet.connect(self.mapToolChanged)
 		
 	def mapToolChanged(self, tool):
 		QObject.disconnect( self.iface.mapCanvas(), SIGNAL( "mapToolSet(QgsMapTool *)" ), self.mapToolChanged)

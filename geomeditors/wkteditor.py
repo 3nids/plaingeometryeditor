@@ -61,6 +61,7 @@ class WktEditor():
 			return True
 
 	def setGeom(self, geometry):
+		print geometry.exportToWkt() 
 		self.geomEditorDialog.geomTextEdit.setText( geometry.exportToWkt() )
 
 	def getGeom(self):
@@ -73,8 +74,9 @@ class WktEditor():
 			
 	def cursorPositionChanged(self):
 		geoText = self.geomEditorDialog.geomTextEdit.toPlainText()
-		curPos = self.geomEditorDialog.geomTextEdit.textCursor().position()
-		highlightDict = {}
+		cursor = self.geomEditorDialog.geomTextEdit.textCursor()
+		curPos = cursor.position()
+		curAnc = cursor.anchor()
 		
 		# Determine current point
 		currPointGeom = QgsGeometry()
@@ -89,14 +91,22 @@ class WktEditor():
 					r = curPos+mr.end()-1
 					pointText = geoText[l:r]
 					#print l,r,pointText
-					highlightDict[l] = '<i>'
-					highlightDict[r] = '</i>'
+		
+					highlight = QTextEdit.ExtraSelection()
+					highlight.cursor = self.geomEditorDialog.geomTextEdit.textCursor()
+					highlight.cursor.setPosition( l )
+					highlight.cursor.setPosition( r, QTextCursor.KeepAnchor )
+					highlight.format.setBackground( Qt.green )
+					extras = [ highlight ]
+					self.geomEditorDialog.geomTextEdit.setExtraSelections( extras )
+					
 					mm = self.spacePointReg.match( pointText )
 					if mm:
 						x = pointText[:mm.end()].toDouble()[0]
 						y = pointText[mm.end():].toDouble()[0]
 						currPointGeom = QgsGeometry.fromPoint( QgsPoint( x, y ) )
-						#print "point ",x,y,currPointGeom.exportToWkt()
+						#print "point ",x,y
+			
 		self.geomEditorDialog.currentPointChanged( currPointGeom )			
 
 		# Parenthesis highlighting
@@ -113,18 +123,29 @@ class WktEditor():
 			#print geoText[leftP+1:]
 			m = self.rightPreg.match( geoText[leftP+1:] )
 			if m:
-				l = leftP
-				r = leftP+m.end()
-				highlightDict[l] = '<b>'
-				highlightDict[l+1] = '</b>'
-				highlightDict[r] = '<b>'
-				highlightDict[r+1] = '</b>'
+				start = leftP
+				count = m.end()
+	
+				
+				#self.geomEditorDialog.highlighter.colorizeText( start, count)
+				
+
+				
+				
+				#highlightDict[l] = '<b>'
+				#highlightDict[l+1] = '</b>'
+				#highlightDict[r] = '<b>'
+				#highlightDict[r+1] = '</b>'
 				
 		# Construct rich text
-		p = 0
-		richText = ""
-		for k in sorted(highlightDict.iterkeys()):
-			richText = richText + geoText[p:k] + highlightDict[k]
-			p=k
-		richText = richText + geoText[p:]
-		self.geomEditorDialog.cursorPositionChanged( curPos , richText )
+		#p = 0
+		#richText = ""
+		#for k in sorted(highlightDict.iterkeys()):
+		#	richText = richText + geoText[p:k] + highlightDict[k]
+		#	p=k
+		#richText = richText + geoText[p:]
+		#self.geomEditorDialog.cursorPositionChanged( curPos , richText )
+		
+
+				
+				
