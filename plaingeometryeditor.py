@@ -7,7 +7,6 @@ denis.rouzaud@gmail.com
 Jan. 2013
 """
 
-
 # Import the PyQt and QGIS libraries
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -44,7 +43,6 @@ class PlainGeometryEditor():
 		QObject.connect(self.mapTool , SIGNAL("geomIdentified") , self.editGeometry ) 
 		canvas.setMapTool(self.mapTool)
 		QObject.connect( canvas, SIGNAL( "mapToolSet(QgsMapTool *)" ), self.mapToolChanged)
-		canvas.mapToolSet.connect(self.mapToolChanged)
 		
 	def mapToolChanged(self, tool):
 		QObject.disconnect( self.iface.mapCanvas(), SIGNAL( "mapToolSet(QgsMapTool *)" ), self.mapToolChanged)

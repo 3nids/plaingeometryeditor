@@ -16,11 +16,12 @@ try:
 	from ui_geomeditor import Ui_GeomEditor
 except:
 	from ui_geomeditor_v18 import Ui_GeomEditor
-	
 
 from geomeditors.celleditor import CellEditor
 from geomeditors.wkteditor import WktEditor
 from geomeditors.wkbeditor import WkbEditor
+
+from mysettings import MySettings
 
 class GeomEditorDialog(QDialog, Ui_GeomEditor ):
 	def __init__(self,iface,layer,feature):
@@ -37,7 +38,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor ):
 		self.wktEditor  = WktEditor(  self )
 		self.wkbEditor  = WkbEditor(  self )
 		if not self.geomType in (QGis.Point, QGis.Line, QGis.Polygon):
-			print self.close()
+			self.close()
 			return
 		# qgis < 1.9
 		# hide the geometry panel
@@ -45,14 +46,14 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor ):
 			self.rubberSettingsFrame.setVisible(False)
 		except:
 			pass
-			
+		
 		self.featureRubber = QgsRubberBand( iface.mapCanvas() )
 		self.currentPointRubber = QgsRubberBand( iface.mapCanvas() )
-		self.currentPointRubber.setWidth(10)
-		try:
-			self.currentPointRubber.setIconSize(10)
-		except:
-			pass
+
+		self.settings = MySettings(self)
+		self.settings.settingChanged.connect(self.updateRubber)
+		self.updateRubber(None)
+			
 			
 		self.displayCombo.setCurrentIndex(1)
 
@@ -67,7 +68,10 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor ):
 		QObject.connect(layer, SIGNAL( "editingStarted() " ), self.layerEditable )
 		self.layerLabel.setText( layer.name() )
 		try:
-			self.featureEdit.setText( feature.attribute( layer.displayField() ).toString() )
+			featureTitle = feature.attribute( layer.displayField() ).toString()
+			if featureTitle == "":
+				featureTitle = "%s" % feature.id()
+			self.featureEdit.setText( featureTitle )
 		except: # qgis <1.9
 			self.featureEdit.setText( "%s" % feature.id() )
 			
@@ -152,3 +156,15 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor ):
 			self.layer.changeGeometry( self.feature.id(), geometry )
 			self.iface.mapCanvas().refresh()
 			self.close()
+			
+	def updateRubber(self, setting):
+		self.featureRubber.setColor(self.settings.value("rubberColor"))
+		
+		
+		self.currentPointRubber.setWidth(10)
+		try:
+			self.currentPointRubber.setIconSize(10)
+		except:
+			pass
+		
+		self.iface.mapCanvas().refresh()
