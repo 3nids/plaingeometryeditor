@@ -13,21 +13,25 @@ from qgis.core import *
 from qgis.gui import *
 
 try:
-	from ui_geomeditor import Ui_GeomEditor
+	from ui.ui_geomeditor import Ui_GeomEditor
 except:
-	from ui_geomeditor_v18 import Ui_GeomEditor
+	from ui.ui_geomeditor_v18 import Ui_GeomEditor
 
 from geomeditors.celleditor import CellEditor
 from geomeditors.wkteditor import WktEditor
 from geomeditors.wkbeditor import WkbEditor
 
-from mysettings import MySettings
+from mysettings import mySettings, pluginName
+from qgistools.pluginsettings import PluginSettings
 
-class GeomEditorDialog(QDialog, Ui_GeomEditor ):
+
+class GeomEditorDialog(QDialog, Ui_GeomEditor, PluginSettings):
 	def __init__(self,iface,layer,feature):
 		self.iface = iface
 		QDialog.__init__( self, iface.mainWindow() )
 		self.setupUi(self)
+		PluginSettings.__init__(self, pluginName, mySettings, False, True)
+		
 		self.setAttribute( Qt.WA_DeleteOnClose )
 		self.feature = feature
 		self.layer = layer

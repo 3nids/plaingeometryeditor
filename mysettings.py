@@ -4,16 +4,16 @@ QGIS plugin
 
 Denis Rouzaud
 denis.rouzaud@gmail.com
-Jan. 2013
+Apr. 2013
 """
-from pluginsettings import PluginSettings
+from PyQt4.QtGui import QColor,QDialog
 
-from PyQt4.QtGui import QColor
+from qgistools.pluginsettings import *
 
-class MySettings(PluginSettings):
-	def __init__(self,uiObject=None):
-		PluginSettings.__init__(self, "plaingeometryeditor",uiObject)
-		self.addSetting("rubberColor", "global", "color", QColor(0,0,255),True)
-		self.addSetting("sketchGeometry", "global", "bool", True, True)
-		
+pluginName = "plaingeometryeditor"
 
+mySettings = [
+	# global settings
+	Bool(   pluginName, "sketchGeometry"                   , "global",  True ),
+	Color(  pluginName, "rubberColor"          , "global",  QColor(0,0,255) )
+]
