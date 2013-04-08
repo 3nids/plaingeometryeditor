@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>571</width>
-    <height>549</height>
+    <width>468</width>
+    <height>327</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -185,6 +185,25 @@
          <property name="margin">
           <number>0</number>
          </property>
+         <item row="0" column="2">
+          <widget class="QLabel" name="featureRubberColor">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>30</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_2">
            <property name="text">
@@ -192,103 +211,119 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="3">
-          <widget class="QSpinBox" name="rubberSize">
-           <property name="toolTip">
-            <string extracomment="Size"/>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QToolButton" name="toolButton_4">
-           <property name="toolTip">
-            <string extracomment="Icon"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QSpinBox" name="spinBox_2">
-           <property name="toolTip">
-            <string extracomment="Size"/>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="checkBox">
-           <property name="text">
-            <string>sketch current point in editor</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
+         <item row="1" column="0" colspan="5">
+          <widget class="QWidget" name="pointRubberGroup" native="true">
+           <layout class="QGridLayout" name="gridLayout_8">
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="currentPointRubberIcon">
+              <property name="currentIndex">
+               <number>3</number>
+              </property>
+              <item>
+               <property name="text">
+                <string>None</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>+</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>x</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>□</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>○</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QCheckBox" name="displayPointRubber">
+              <property name="text">
+               <string>sketch current point in editor</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="currentPointRubberColor">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>30</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QSpinBox" name="currentPointRubberSize">
+              <property name="toolTip">
+               <string extracomment="Size"/>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item row="0" column="4">
-          <widget class="QSlider" name="alphaSlider">
+          <widget class="QDoubleSpinBox" name="featureRubberSize">
            <property name="toolTip">
-            <string extracomment="Transparency"/>
+            <string extracomment="Size"/>
+           </property>
+           <property name="decimals">
+            <number>1</number>
+           </property>
+           <property name="minimum">
+            <double>0.100000000000000</double>
            </property>
            <property name="maximum">
-            <number>100</number>
+            <double>20.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.200000000000000</double>
            </property>
            <property name="value">
-            <number>80</number>
+            <double>0.600000000000000</double>
            </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <spacer name="horizontalSpacer_2">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="rubberColor">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
+           <property name="sizeHint" stdset="0">
             <size>
-             <width>25</width>
-             <height>0</height>
+             <width>40</width>
+             <height>20</height>
             </size>
            </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="pointColor">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>25</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
+          </spacer>
          </item>
         </layout>
-        <zorder>label_2</zorder>
-        <zorder>toolButton_4</zorder>
-        <zorder>rubberSize</zorder>
-        <zorder>spinBox_2</zorder>
-        <zorder>checkBox</zorder>
-        <zorder>alphaSlider</zorder>
-        <zorder>rubberColor</zorder>
-        <zorder>pointColor</zorder>
        </widget>
       </item>
      </layout>

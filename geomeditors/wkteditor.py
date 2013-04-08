@@ -28,27 +28,23 @@ class WktEditor():
 			print "Polygon"
 		else:
 			raise NameError( "No geometry found" )
-			
+
 		# Character in a point
 		# a point, a digit or a white space
 		self.inPointReg = re.compile("(-|\d|\s|\.)")
-		
+
 		# Right delimiter of a point, i.e. comma or right parenthesis
 		# some digits or not, eventually a point plus some digits, eventually some space plus a number and finally a comma or a right parenthesis
 		# dont forget it can start with a point!
 		self.rightPointDelimiter = re.compile("-?\d*(\.\d+)?(\s+-?\d+(\.\d+)?)?(,|\))")
-		
+
 		# Left delimiter of a point, i.e. comma or left parenthesis
 		# a comma or a left parenthesis, some digits or not, eventually a point plus some digits, eventually some space plus a number and the end of string
 		# dont forget it can end by a point!
 		self.leftPointDelimiter  = re.compile("(,|\()\s*-?\d+(\.\d*)?(\s+-?\d+(\.\d*)?)?$")
-		
+
 		# Look for middle space separator of a point
 		self.spacePointReg = re.compile("\s*-?\d+(\.\d+)?\s+")
-		
-		# Look for closing parenthesis (take care of one level of sub-parenthesis for polygons)
-		self.rightPreg = re.compile(       "([^()]*\([^()]*\)[^()]*)*[^(]*\)")
-		self.leftPreg  = re.compile("[^)]*\(([^()]*\([^()]*\)[^()]*)*[^()]*$")
 
 	def isGeomValid(self):
 		geoText = self.geomEditorDialog.geomTextEdit.toPlainText()
@@ -61,23 +57,23 @@ class WktEditor():
 			return True
 
 	def setGeom(self, geometry):
-		print geometry.exportToWkt() 
+		print geometry.exportToWkt()
 		self.geomEditorDialog.geomTextEdit.setText( geometry.exportToWkt() )
 
 	def getGeom(self):
 		if self.isGeomValid():
 			geoText = self.geomEditorDialog.geomTextEdit.toPlainText()
-			geometry = QgsGeometry.fromWkt( unicode( geoText ) )			
+			geometry = QgsGeometry.fromWkt( unicode( geoText ) )
 			return geometry
 		else:
 			return QgsGeometry()
-			
+
 	def cursorPositionChanged(self):
 		geoText = self.geomEditorDialog.geomTextEdit.toPlainText()
 		cursor = self.geomEditorDialog.geomTextEdit.textCursor()
 		curPos = cursor.position()
 		curAnc = cursor.anchor()
-		
+
 		# Determine current point
 		currPointGeom = QgsGeometry()
 		if self.isGeomValid() and curPos < len(geoText) and curPos >= 0:
@@ -91,7 +87,7 @@ class WktEditor():
 					r = curPos+mr.end()-1
 					pointText = geoText[l:r]
 					#print l,r,pointText
-		
+
 					highlight = QTextEdit.ExtraSelection()
 					highlight.cursor = self.geomEditorDialog.geomTextEdit.textCursor()
 					highlight.cursor.setPosition( l )
@@ -99,53 +95,11 @@ class WktEditor():
 					highlight.format.setBackground( Qt.green )
 					extras = [ highlight ]
 					self.geomEditorDialog.geomTextEdit.setExtraSelections( extras )
-					
+
 					mm = self.spacePointReg.match( pointText )
 					if mm:
 						x = pointText[:mm.end()].toDouble()[0]
 						y = pointText[mm.end():].toDouble()[0]
 						currPointGeom = QgsGeometry.fromPoint( QgsPoint( x, y ) )
 						#print "point ",x,y
-			
-		self.geomEditorDialog.currentPointChanged( currPointGeom )			
-
-		# Parenthesis highlighting
-		leftP = None
-		# search for a ) just on the right (i.e. curPos)
-		if curPos < len(geoText):
-			if geoText[curPos]=="(":
-				leftP = curPos
-		if leftP == None and curPos-1 >= 0:
-			if geoText[curPos-1]=="(":
-				leftP = curPos-1
-		#print leftP
-		if leftP != None:
-			#print geoText[leftP+1:]
-			m = self.rightPreg.match( geoText[leftP+1:] )
-			if m:
-				start = leftP
-				count = m.end()
-	
-				
-				#self.geomEditorDialog.highlighter.colorizeText( start, count)
-				
-
-				
-				
-				#highlightDict[l] = '<b>'
-				#highlightDict[l+1] = '</b>'
-				#highlightDict[r] = '<b>'
-				#highlightDict[r+1] = '</b>'
-				
-		# Construct rich text
-		#p = 0
-		#richText = ""
-		#for k in sorted(highlightDict.iterkeys()):
-		#	richText = richText + geoText[p:k] + highlightDict[k]
-		#	p=k
-		#richText = richText + geoText[p:]
-		#self.geomEditorDialog.cursorPositionChanged( curPos , richText )
-		
-
-				
-				
+		self.geomEditorDialog.currentPointChanged( currPointGeom )

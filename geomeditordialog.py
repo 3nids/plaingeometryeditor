@@ -40,12 +40,18 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, PluginSettings):
 		if not self.geomType in (QGis.Point, QGis.Line, QGis.Polygon):
 			self.close()
 			return
+		if self.geomType == QGis.Point:
+			self.pointRubberGroup.hide()
 
 		self.featureRubber = QgsRubberBand( iface.mapCanvas() )
 		self.currentPointRubber = QgsRubberBand( iface.mapCanvas() )
-
-		#self.settings.settingChanged.connect(self.updateRubber)
-		self.updateRubber(None)
+		self.setting("featureRubberColor").valueChanged.connect( self.updateFeatureRubber )
+		self.setting("featureRubberSize").valueChanged.connect( self.updateFeatureRubber )
+		self.setting("currentPointRubberSize").valueChanged.connect( self.updateCurrentPointRubber )
+		self.setting("currentPointRubberColor").valueChanged.connect( self.updateCurrentPointRubber )
+		self.setting("currentPointRubberIcon").valueChanged.connect( self.updateCurrentPointRubber )
+		self.updateFeatureRubber(None)
+		self.updateCurrentPointRubber(None)
 
 		self.displayCombo.setCurrentIndex(1)
 
@@ -126,16 +132,6 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, PluginSettings):
 		self.geomTextEdit.setPalette(p)
 		self.geomStatusLabel.setText( geomStatus )
 
-	def cursorPositionChanged( self, curPos, richText ):
-		QObject.disconnect(self.geomTextEdit, SIGNAL( "textChanged()" ) , self.geomChanged) # textEdited signal does not exist yet, so need to disconnect
-		QObject.disconnect(self.geomTextEdit, SIGNAL("cursorPositionChanged()"), self.getEditor().cursorPositionChanged )
-		self.geomTextEdit.setText(richText)
-		cursor = self.geomTextEdit.textCursor()
-		cursor.setPosition( curPos )
-		self.geomTextEdit.setTextCursor( cursor )
-		QObject.connect(self.geomTextEdit, SIGNAL( "textChanged()" ) , self.geomChanged)
-		QObject.connect(self.geomTextEdit, SIGNAL("cursorPositionChanged()"), self.getEditor().cursorPositionChanged )
-
 	def currentPointChanged( self, point ):
 		self.currentPointRubber.setToGeometry( point , self.layer )
 
@@ -145,14 +141,14 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, PluginSettings):
 			self.layer.changeGeometry( self.feature.id(), geometry )
 			self.iface.mapCanvas().refresh()
 			self.close()
-
-	def updateRubber(self, setting):
-		self.featureRubber.setColor(self.value("rubberColor"))
-
-		self.currentPointRubber.setWidth(10)
-		try:
-			self.currentPointRubber.setIconSize(10)
-		except:
-			pass
-
+			
+	def updateFeatureRubber(self, i):
+		self.featureRubber.setColor( self.value("featureRubberColor") )
+		self.featureRubber.setWidth( self.value("featureRubberSize")  )
+		self.iface.mapCanvas().refresh()
+		
+	def updateCurrentPointRubber(self, i):
+		self.currentPointRubber.setIconSize( self.value("currentPointRubberSize")  )
+		self.currentPointRubber.setColor   ( self.value("currentPointRubberColor") )
+		self.currentPointRubber.setIcon    ( self.value("currentPointRubberIcon") )
 		self.iface.mapCanvas().refresh()
