@@ -14,6 +14,6 @@ pluginName = "plaingeometryeditor"
 
 mySettings = [
 	# global settings
-	Bool(   pluginName, "sketchGeometry"                   , "global",  True ),
-	Color(  pluginName, "rubberColor"          , "global",  QColor(0,0,255) )
+	Bool(   pluginName, "sketchGeometry", "global",  True ),
+	Color(  pluginName, "rubberColor"   , "global",  QColor(0,0,255) )
 ]
