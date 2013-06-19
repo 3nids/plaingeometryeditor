@@ -31,6 +31,10 @@ from qgis.core import QgsGeometry
 
 from geomeditor import GeomEditor
 
+import binascii
+
+SRID_FLAG = 0x20000000
+
 
 class WkbEditor(QTextEdit, GeomEditor):
     currentPointChanged = pyqtSignal(QgsGeometry)
@@ -39,21 +43,54 @@ class WkbEditor(QTextEdit, GeomEditor):
     def __init__(self, layer, feature, parent=None):
         GeomEditor.__init__(self, layer, feature)
         QTextEdit.__init__(self, parent)
-     
-    def getGeom(self):
-        """
-        must be overridden in geom editor subclass
-        """
-        return None
 
-    def setGeom(self, geom):
-        """
-        must be overridden in geom editor subclass
-        """
-        pass
+        self.setGeom(feature.geometry())
+
+        self.textChanged.connect(self.geomChanged)
+
+    def getGeom(self):
+            geoText = unicode(self.toPlainText())
+            geom = self.wkb2qgis(geoText)
+            if geom.isGeosValid():
+                return geom
+            else:
+                return None
+
+    def setGeom(self, geometry):
+        hexText = binascii.b2a_hex(geometry.asWkb())
+        self.setText(hexText)
 
     def layerEditable(self):
-        """
-        must be overridden in geom editor subclass
-        """
-        pass
+        layerIsEditable = self.layer.isEditable()
+        self.setReadOnly(not layerIsEditable)
+
+    def geomChanged(self):
+        geom = self.getGeom()
+        if geom is None:
+            geom = QgsGeometry()
+        self.geometryChanged.emit(geom)
+
+    def wkb2qgis(self, wkb):
+        geom = QgsGeometry()
+        try:
+            geomType = int("0x" + self.decodeBinary(wkb[2:10]), 0)
+            if geomType & SRID_FLAG:
+                wkb = wkb[:2] + self.encodeBinary(geomType ^ SRID_FLAG) + wkb[18:]
+            geom.fromWkb(binascii.a2b_hex(wkb))
+        except TypeError:
+            pass
+        return geom
+
+    def encodeBinary(self, value):
+        # https://github.com/elpaso/quickwkt/blob/master/QuickWKT.py#L132
+        wkb = binascii.a2b_hex("%08x" % value)
+        wkb = wkb[::-1]
+        wkb = binascii.b2a_hex(wkb)
+        return wkb
+
+    def decodeBinary(self, wkb):
+        """Decode the binary wkb and return as a hex string"""
+        value = binascii.a2b_hex(wkb)
+        value = value[::-1]
+        value = binascii.b2a_hex(value)
+        return value

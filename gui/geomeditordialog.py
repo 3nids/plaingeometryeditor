@@ -44,13 +44,11 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.settings = MySettings()
         SettingDialog.__init__(self, self.settings, False, True)
         self.mapCanvas = mapCanvas
-
         self.setAttribute(Qt.WA_DeleteOnClose)
-
-        self.editor = GeomEditor(layer, feature)
         self.feature = feature
         self.layer = layer
 
+        # close if no geom, hide "sketch current point" if not needed
         geomType = layer.geometryType()
         if not geomType in (QGis.Point, QGis.Line, QGis.Polygon):
             self.close()
@@ -58,6 +56,13 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         if geomType == QGis.Point:
             self.pointRubberGroup.hide()
 
+        # editors management
+        self.editorLayout = QGridLayout(self.editorContainer)
+        self.editor = GeomEditor(layer, feature)
+        self.displayCombo.currentIndexChanged.connect(self.setEditor)
+        self.displayCombo.setCurrentIndex(1)
+
+        # rubber bands
         self.featureRubber = QgsRubberBand(mapCanvas)
         self.currentPointRubber = QgsRubberBand(mapCanvas)
         self.settings.setting("featureRubberColor").valueChanged.connect(self.updateFeatureRubber)
@@ -68,21 +73,16 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.updateFeatureRubber()
         self.updateCurrentPointRubber()
 
-        self.displayCombo.currentIndexChanged.connect(self.setEditor)
-        self.displayCombo.setCurrentIndex(1)
-
-        # GUI stuff
+        # GUI signals connection
         self.finished.connect(self.finish)
         self.applyButton.clicked.connect(self.applyGeometry)
         self.resetButton.clicked.connect(self.editor.resetGeom)
-
         self.sketchGeometry.clicked.connect(self.geometryChanged)
-
-
         self.layerEditable()
         layer.editingStopped.connect(self.layerEditable)
         layer.editingStarted.connect(self.layerEditable)
 
+        # set texts in UI
         self.layerLabel.setText(layer.name())
         featureTitle = "%s" % feature[layer.displayField()]
         if featureTitle == "":
@@ -90,6 +90,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.featureEdit.setText(featureTitle)
 
     def setEditor(self):
+        self.editorLayout.removeWidget(self.editor)
         idx = self.displayCombo.currentIndex()
         if idx == 0:
             editor = CellEditor
@@ -100,7 +101,6 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         else:
             self.editor = GeomEditor
             return
-        self.editorLayout = QGridLayout(self.editorContainer)
         self.editor = editor(self.layer, self.feature)
         self.editorLayout.addWidget(self.editor, 0, 0, 1, 1)
 

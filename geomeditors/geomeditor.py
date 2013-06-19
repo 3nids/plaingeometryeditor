@@ -26,16 +26,17 @@
 #
 #---------------------------------------------------------------------
 
-from PyQt4.QtCore import pyqtSignal, QObject
+from PyQt4.QtCore import pyqtSignal
+from PyQt4.QtGui import QWidget
 from qgis.core import QgsGeometry
 
 
-class GeomEditor(QObject):
+class GeomEditor(QWidget):
     currentPointChanged = pyqtSignal(QgsGeometry)
     geometryChanged = pyqtSignal(QgsGeometry)
 
     def __init__(self, layer, feature):
-        QObject.__init__(self)
+        QWidget.__init__(self)
         self.initialGeom = QgsGeometry(feature.geometry())
         self.geomType = layer.geometryType()
         self.layer = layer
