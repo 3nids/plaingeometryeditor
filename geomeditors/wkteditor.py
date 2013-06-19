@@ -26,10 +26,9 @@
 #
 #---------------------------------------------------------------------
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
-from qgis.gui import *
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QTextCursor, QTextEdit
+from qgis.core import QGis, QgsGeometry, QgsPoint
 
 import re
 
@@ -59,7 +58,7 @@ class WktEditor():
          # Left delimiter of a point, i.e. comma or left parenthesis
         # a comma or a left parenthesis, some digits or not, eventually a point plus some digits, eventually some space plus a number and the end of string
         # dont forget it can end by a point!
-        self.leftPointDelimiter  = re.compile("(,|\()\s*-?\d+(\.\d*)?(\s+-?\d+(\.\d*)?)?$")
+        self.leftPointDelimiter = re.compile("(,|\()\s*-?\d+(\.\d*)?(\s+-?\d+(\.\d*)?)?$")
          # Look for middle space separator of a point
         self.spacePointReg = re.compile("\s*-?\d+(\.\d+)?\s+")
 
@@ -67,7 +66,7 @@ class WktEditor():
         geoText = self.geomEditorDialog.geomTextEdit.toPlainText()
         if not self.wktReg.match(geoText):
             return False
-        geometry = QgsGeometry.fromWkt(unicode(geoText))
+        geometry = QgsGeometry().fromWkt(unicode(geoText))
         if not geometry:
             return False
         else:
@@ -80,7 +79,7 @@ class WktEditor():
     def getGeom(self):
         if self.isGeomValid():
             geoText = self.geomEditorDialog.geomTextEdit.toPlainText()
-            geometry = QgsGeometry.fromWkt(unicode(geoText))
+            geometry = QgsGeometry().fromWkt(unicode(geoText))
             return geometry
         else:
             return QgsGeometry()
@@ -110,13 +109,13 @@ class WktEditor():
                     highlight.cursor.setPosition(l)
                     highlight.cursor.setPosition(r, QTextCursor.KeepAnchor)
                     highlight.format.setBackground(Qt.green)
-                    extras = [ highlight ]
+                    extras = [highlight]
                     self.geomEditorDialog.geomTextEdit.setExtraSelections(extras)
 
                     mm = self.spacePointReg.match(pointText)
                     if mm:
                         x = float(pointText[:mm.end()])
                         y = float(pointText[mm.end():])
-                        currPointGeom = QgsGeometry.fromPoint(QgsPoint(x, y))
+                        currPointGeom = QgsGeometry().fromPoint(QgsPoint(x, y))
                         #print "point ",x,y
         self.geomEditorDialog.currentPointChanged(currPointGeom)

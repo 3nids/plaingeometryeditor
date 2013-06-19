@@ -39,7 +39,7 @@ from geomeditors.celleditor import CellEditor
 from geomeditors.wkteditor import WktEditor
 from geomeditors.wkbeditor import WkbEditor
 
-from mysettings import MySettings
+from core.mysettings import MySettings
 
 
 class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):

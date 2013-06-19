@@ -26,12 +26,10 @@
 #
 #---------------------------------------------------------------------
 
-# Import the PyQt and QGIS libraries
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt4.QtGui import QAction, QIcon
 
-from identifygeometry import IdentifyGeometry
-from geomeditordialog import GeomEditorDialog
+from gui.identifygeometry import IdentifyGeometry
+from gui.geomeditordialog import GeomEditorDialog
 
 import resources
 
@@ -45,7 +43,7 @@ class PlainGeometryEditor():
         self.mapToolAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/plaingeometryeditor-32.png"),
                                      "Plain Geometry Editor", self.iface.mainWindow())
         self.mapToolAction.setCheckable(True)
-        QObject.connect(self.mapToolAction, SIGNAL("triggered()"), self.mapToolInit)
+        self.mapToolAction.triggered.connect(self.mapToolInit)
         self.iface.addToolBarIcon(self.mapToolAction)
         self.iface.addPluginToMenu("&Plain Geometry Editor", self.mapToolAction)
                   
@@ -60,12 +58,12 @@ class PlainGeometryEditor():
             return
         self.mapToolAction.setChecked(True)
         self.mapTool = IdentifyGeometry(canvas)
-        QObject.connect(self.mapTool, SIGNAL("geomIdentified"), self.editGeometry) 
+        self.mapTool.geomIdentified.connect(self.editGeometry)
         canvas.setMapTool(self.mapTool)
-        QObject.connect(canvas, SIGNAL("mapToolSet(QgsMapTool *)"), self.mapToolChanged)
+        canvas.mapToolSet.connect(self.mapToolChanged)
         
     def mapToolChanged(self, tool):
-        QObject.disconnect(self.iface.mapCanvas(), SIGNAL("mapToolSet(QgsMapTool *)"), self.mapToolChanged)
+        self.iface.mapCanvas().mapToolSet.disconnect(self.mapToolChanged)
         self.mapToolAction.setChecked(False)
         self.iface.mapCanvas().unsetMapTool(self.mapTool)
         
