@@ -43,6 +43,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.setupUi(self)
         self.settings = MySettings()
         SettingDialog.__init__(self, self.settings, False, True)
+        self.mapCanvas = mapCanvas
 
         self.setAttribute(Qt.WA_DeleteOnClose)
 
@@ -64,8 +65,8 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.settings.setting("currentPointRubberSize").valueChanged.connect(self.updateCurrentPointRubber)
         self.settings.setting("currentPointRubberColor").valueChanged.connect(self.updateCurrentPointRubber)
         self.settings.setting("currentPointRubberIcon").valueChanged.connect(self.updateCurrentPointRubber)
-        self.updateFeatureRubber(None)
-        self.updateCurrentPointRubber(None)
+        self.updateFeatureRubber()
+        self.updateCurrentPointRubber()
 
         self.displayCombo.currentIndexChanged.connect(self.setEditor)
         self.displayCombo.setCurrentIndex(1)
@@ -134,7 +135,8 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
 
     @pyqtSlot(QgsGeometry)
     def drawCurrentPoint(self, point):
-        self.currentPointRubber.setToGeometry(point, self.layer)
+        self.currentPointRubber.setToGeometry(point, None)
+        self.mapCanvas.refresh()
 
     def applyGeometry(self):
         geometry = self.editor.getGeom()
@@ -143,13 +145,13 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
             self.layer.triggerRepaint()
             self.close()
             
-    def updateFeatureRubber(self, i):
+    def updateFeatureRubber(self):
         self.featureRubber.setColor(self.settings.value("featureRubberColor"))
         self.featureRubber.setWidth(self.settings.value("featureRubberSize"))
         self.layer.triggerRepaint()
         
-    def updateCurrentPointRubber(self, i):
+    def updateCurrentPointRubber(self):
         self.currentPointRubber.setIconSize(self.settings.value("currentPointRubberSize"))
         self.currentPointRubber.setColor(self.settings.value("currentPointRubberColor"))
         self.currentPointRubber.setIcon(self.settings.value("currentPointRubberIcon"))
-        self.layer.triggerRepaint()
+        self.mapCanvas.refresh()

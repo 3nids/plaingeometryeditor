@@ -89,6 +89,7 @@ class WktEditor(QTextEdit, GeomEditor):
 
         # Determine current point
         currPointGeom = QgsGeometry()
+        self.setExtraSelections([])
         if self.isGeomValid() and 0 <= curPos < len(geoText):
             if inPointReg.match(geoText[curPos]):
                 ml = leftPointDelimiter.search(geoText[:curPos])
