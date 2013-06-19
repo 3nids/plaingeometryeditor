@@ -126,7 +126,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
             self.applyButton.setEnabled(self.layer.isEditable())
             geomStatus = "Geometry is valid"
             if self.sketchGeometry.isChecked():
-                self.featureRubber.setToGeometry(self.editor.getGeom, self.layer)
+                self.featureRubber.setToGeometry(self.editor.getGeom(), self.layer)
         else:
             self.applyButton.setEnabled(False)
             self.displayCombo.setEnabled(False)

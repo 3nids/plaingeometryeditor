@@ -28,7 +28,7 @@
 
 from PyQt4.QtCore import Qt, pyqtSignal
 from PyQt4.QtGui import QTextCursor, QTextEdit
-from qgis.core import QgsGeometry, QgsPoint
+from qgis.core import QgsGeometry, QgsPoint, QGis
 
 from geomeditor import GeomEditor
 
@@ -82,6 +82,8 @@ class WktEditor(QTextEdit, GeomEditor):
         self.geometryChanged.emit(self.getGeom())
 
     def emitCurrentPoint(self):
+        if self.geomType == QGis.Point:
+            return
         geoText = self.toPlainText()
         cursor = self.textCursor()
         curPos = cursor.position()
