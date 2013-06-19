@@ -142,8 +142,9 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         geometry = self.editor.getGeom()
         if geometry is not None:
             self.layer.changeGeometry(self.feature.id(), geometry)
+            self.layer.updateExtents()
+            self.layer.setCacheImage(None)
             self.layer.triggerRepaint()
-            self.close()
             
     def updateFeatureRubber(self):
         self.featureRubber.setColor(self.settings.value("featureRubberColor"))
