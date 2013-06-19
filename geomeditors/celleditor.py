@@ -26,21 +26,35 @@
 #
 #---------------------------------------------------------------------
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
-from qgis.gui import *
+from PyQt4.QtCore import pyqtSignal
+from PyQt4.QtGui import QTextEdit
+from qgis.core import QgsGeometry
+
+from geomeditor import GeomEditor
 
 
-class CellEditor():
-    def __init__(self, geomEditorDialog):
-        self.geomEditorDialog = geomEditorDialog
-     
-    def isGeomValid(self):
-        return False
-          
-    def cursorPositionChanged(self):
-        return
-          
+class CellEditor(QTextEdit, GeomEditor):
+    currentPointChanged = pyqtSignal(QgsGeometry)
+    geometryChanged = pyqtSignal(QgsGeometry)
+
+    def __init__(self, layer, feature, parent=None):
+        GeomEditor.__init__(self, layer, feature)
+        QTextEdit.__init__(self, parent)
+
     def getGeom(self):
-        return QgsGeometry()
+        """
+        must be overridden in geom editor subclass
+        """
+        return None
+
+    def setGeom(self, geom):
+        """
+        must be overridden in geom editor subclass
+        """
+        pass
+
+    def layerEditable(self):
+        """
+        must be overridden in geom editor subclass
+        """
+        pass

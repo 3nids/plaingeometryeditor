@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>468</width>
-    <height>327</height>
+    <width>487</width>
+    <height>494</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Plain Geometry Editor</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_4">
-   <item row="4" column="2">
+   <item row="3" column="2">
     <spacer name="horizontalSpacer_4">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -27,20 +27,13 @@
      </property>
     </spacer>
    </item>
-   <item row="5" column="0" colspan="3">
+   <item row="4" column="0" colspan="3">
     <widget class="QWidget" name="w5" native="true">
      <layout class="QGridLayout" name="gridLayout_2">
       <property name="margin">
        <number>0</number>
       </property>
       <item row="0" column="0">
-       <widget class="QPushButton" name="copyButton">
-        <property name="text">
-         <string>Copy to clipbaord</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -53,14 +46,14 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="2">
+      <item row="0" column="1">
        <widget class="QPushButton" name="resetButton">
         <property name="text">
          <string>Reset</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
+      <item row="0" column="2">
        <widget class="QPushButton" name="applyButton">
         <property name="text">
          <string>Apply</string>
@@ -158,16 +151,7 @@
      </layout>
     </widget>
    </item>
-   <item row="3" column="0" colspan="3">
-    <widget class="QWidget" name="w3" native="true">
-     <layout class="QGridLayout" name="gridLayout">
-      <property name="margin">
-       <number>0</number>
-      </property>
-     </layout>
-    </widget>
-   </item>
-   <item row="4" column="1">
+   <item row="3" column="1">
     <widget class="QgsCollapsibleGroupBoxBasic" name="sketchGeometry">
      <property name="title">
       <string>Sketch geometry</string>
@@ -330,7 +314,7 @@
     </widget>
    </item>
    <item row="1" column="0" colspan="3">
-    <widget class="QTextEdit" name="geomTextEdit"/>
+    <widget class="QWidget" name="editorContainer" native="true"/>
    </item>
   </layout>
  </widget>

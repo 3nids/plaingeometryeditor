@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/ui_geomeditor.ui'
+# Form implementation generated from reading ui file 'ui_geomeditor.ui'
 #
-# Created: Mon Apr  8 16:30:42 2013
+# Created: Wed Jun 19 10:32:50 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,29 +17,26 @@ except AttributeError:
 class Ui_GeomEditor(object):
     def setupUi(self, GeomEditor):
         GeomEditor.setObjectName(_fromUtf8("GeomEditor"))
-        GeomEditor.resize(468, 327)
+        GeomEditor.resize(487, 494)
         self.gridLayout_4 = QtGui.QGridLayout(GeomEditor)
         self.gridLayout_4.setObjectName(_fromUtf8("gridLayout_4"))
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout_4.addItem(spacerItem, 4, 2, 1, 1)
+        self.gridLayout_4.addItem(spacerItem, 3, 2, 1, 1)
         self.w5 = QtGui.QWidget(GeomEditor)
         self.w5.setObjectName(_fromUtf8("w5"))
         self.gridLayout_2 = QtGui.QGridLayout(self.w5)
         self.gridLayout_2.setMargin(0)
         self.gridLayout_2.setMargin(0)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
-        self.copyButton = QtGui.QPushButton(self.w5)
-        self.copyButton.setObjectName(_fromUtf8("copyButton"))
-        self.gridLayout_2.addWidget(self.copyButton, 0, 0, 1, 1)
         spacerItem1 = QtGui.QSpacerItem(223, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem1, 0, 1, 1, 1)
+        self.gridLayout_2.addItem(spacerItem1, 0, 0, 1, 1)
         self.resetButton = QtGui.QPushButton(self.w5)
         self.resetButton.setObjectName(_fromUtf8("resetButton"))
-        self.gridLayout_2.addWidget(self.resetButton, 0, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.resetButton, 0, 1, 1, 1)
         self.applyButton = QtGui.QPushButton(self.w5)
         self.applyButton.setObjectName(_fromUtf8("applyButton"))
-        self.gridLayout_2.addWidget(self.applyButton, 0, 3, 1, 1)
-        self.gridLayout_4.addWidget(self.w5, 5, 0, 1, 3)
+        self.gridLayout_2.addWidget(self.applyButton, 0, 2, 1, 1)
+        self.gridLayout_4.addWidget(self.w5, 4, 0, 1, 3)
         self.w2 = QtGui.QWidget(GeomEditor)
         self.w2.setObjectName(_fromUtf8("w2"))
         self.gridLayout_6 = QtGui.QGridLayout(self.w2)
@@ -77,13 +74,6 @@ class Ui_GeomEditor(object):
         spacerItem3 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_3.addItem(spacerItem3, 0, 2, 1, 1)
         self.gridLayout_4.addWidget(self.w0, 0, 0, 1, 3)
-        self.w3 = QtGui.QWidget(GeomEditor)
-        self.w3.setObjectName(_fromUtf8("w3"))
-        self.gridLayout = QtGui.QGridLayout(self.w3)
-        self.gridLayout.setMargin(0)
-        self.gridLayout.setMargin(0)
-        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.gridLayout_4.addWidget(self.w3, 3, 0, 1, 3)
         self.sketchGeometry = QgsCollapsibleGroupBoxBasic(GeomEditor)
         self.sketchGeometry.setCheckable(True)
         self.sketchGeometry.setProperty("collapsed", True)
@@ -154,10 +144,10 @@ class Ui_GeomEditor(object):
         spacerItem4 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_5.addItem(spacerItem4, 0, 1, 1, 1)
         self.gridLayout_7.addWidget(self.widget, 0, 0, 1, 1)
-        self.gridLayout_4.addWidget(self.sketchGeometry, 4, 1, 1, 1)
-        self.geomTextEdit = QtGui.QTextEdit(GeomEditor)
-        self.geomTextEdit.setObjectName(_fromUtf8("geomTextEdit"))
-        self.gridLayout_4.addWidget(self.geomTextEdit, 1, 0, 1, 3)
+        self.gridLayout_4.addWidget(self.sketchGeometry, 3, 1, 1, 1)
+        self.editorContainer = QtGui.QWidget(GeomEditor)
+        self.editorContainer.setObjectName(_fromUtf8("editorContainer"))
+        self.gridLayout_4.addWidget(self.editorContainer, 1, 0, 1, 3)
 
         self.retranslateUi(GeomEditor)
         self.currentPointRubberIcon.setCurrentIndex(3)
@@ -166,7 +156,6 @@ class Ui_GeomEditor(object):
 
     def retranslateUi(self, GeomEditor):
         GeomEditor.setWindowTitle(QtGui.QApplication.translate("GeomEditor", "Plain Geometry Editor", None, QtGui.QApplication.UnicodeUTF8))
-        self.copyButton.setText(QtGui.QApplication.translate("GeomEditor", "Copy to clipbaord", None, QtGui.QApplication.UnicodeUTF8))
         self.resetButton.setText(QtGui.QApplication.translate("GeomEditor", "Reset", None, QtGui.QApplication.UnicodeUTF8))
         self.applyButton.setText(QtGui.QApplication.translate("GeomEditor", "Apply", None, QtGui.QApplication.UnicodeUTF8))
         self.layerLabel.setText(QtGui.QApplication.translate("GeomEditor", "Feature", None, QtGui.QApplication.UnicodeUTF8))

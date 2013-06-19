@@ -25,22 +25,35 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 #---------------------------------------------------------------------
+from PyQt4.QtCore import pyqtSignal
+from PyQt4.QtGui import QTextEdit
+from qgis.core import QgsGeometry
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
-from qgis.gui import *
+from geomeditor import GeomEditor
 
 
-class WkbEditor():
-    def __init__(self, geomEditorDialog):
-        self.geomEditorDialog = geomEditorDialog
+class WkbEditor(QTextEdit, GeomEditor):
+    currentPointChanged = pyqtSignal(QgsGeometry)
+    geometryChanged = pyqtSignal(QgsGeometry)
+
+    def __init__(self, layer, feature, parent=None):
+        GeomEditor.__init__(self, layer, feature)
+        QTextEdit.__init__(self, parent)
      
-    def isGeomValid(self):
-        return False
-          
-    def cursorPositionChanged(self):
-        return
-          
     def getGeom(self):
-        return QgsGeometry()
+        """
+        must be overridden in geom editor subclass
+        """
+        return None
+
+    def setGeom(self, geom):
+        """
+        must be overridden in geom editor subclass
+        """
+        pass
+
+    def layerEditable(self):
+        """
+        must be overridden in geom editor subclass
+        """
+        pass

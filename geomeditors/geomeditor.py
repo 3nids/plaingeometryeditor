@@ -26,21 +26,43 @@
 #
 #---------------------------------------------------------------------
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
-from qgis.gui import *
+from PyQt4.QtCore import pyqtSignal, QObject
+from qgis.core import QgsGeometry
 
 
-class GeomEditor():
-    def __init__(self, geomType):
-        self.geomType = geomType
-     
+class GeomEditor(QObject):
+    currentPointChanged = pyqtSignal(QgsGeometry)
+    geometryChanged = pyqtSignal(QgsGeometry)
+
+    def __init__(self, layer, feature):
+        QObject.__init__(self)
+        self.initialGeom = QgsGeometry(feature.geometry())
+        self.geomType = layer.geometryType()
+        self.layer = layer
+
+        layer.editingStopped.connect(self.layerEditable)
+        layer.editingStarted.connect(self.layerEditable)
+
+    def resetGeom(self):
+        self.setGeom(self.initialGeom)
+
     def isGeomValid(self):
-        return False
-          
-    def cursorPositionChanged(self):
-        return
+        return self.getGeom() is not None
           
     def getGeom(self):
-        return QgsGeometry()
+        """
+        must be overridden in geom editor subclass
+        """
+        return None
+
+    def setGeom(self, geom):
+        """
+        must be overridden in geom editor subclass
+        """
+        pass
+
+    def layerEditable(self):
+        """
+        must be overridden in geom editor subclass
+        """
+        pass

@@ -26,47 +26,39 @@
 #
 #---------------------------------------------------------------------
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
-from qgis.gui import *
+from PyQt4.QtCore import Qt, pyqtSlot
+from PyQt4.QtGui import QGridLayout, QDialog
+from qgis.core import QGis, QgsGeometry
+from qgis.gui import QgsRubberBand
 
-from qgissettingmanager import SettingDialog
-
-from ui.ui_geomeditor import Ui_GeomEditor
-
-from geomeditors.celleditor import CellEditor
-from geomeditors.wkteditor import WktEditor
-from geomeditors.wkbeditor import WkbEditor
-
-from core.mysettings import MySettings
+from ..qgissettingmanager import SettingDialog
+from ..core.mysettings import MySettings
+from ..geomeditors import GeomEditor, CellEditor, WkbEditor, WktEditor
+from ..ui.ui_geomeditor import Ui_GeomEditor
 
 
 class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
-    def __init__(self, iface, layer, feature):
-        self.iface = iface
-        QDialog.__init__(self, iface.mainWindow())
+    def __init__(self, layer, feature, mapCanvas, parent=None):
+        QDialog.__init__(self, parent)
         self.setupUi(self)
         self.settings = MySettings()
         SettingDialog.__init__(self, self.settings, False, True)
 
         self.setAttribute(Qt.WA_DeleteOnClose)
+
+        self.editor = GeomEditor(layer, feature)
         self.feature = feature
         self.layer = layer
-        self.initialGeom = QgsGeometry(feature.geometry())
-        self.modifiedGeom = QgsGeometry(feature.geometry())
-        self.geomType = self.initialGeom.type()
-        self.cellEditor = CellEditor(self)
-        self.wktEditor = WktEditor(self)
-        self.wkbEditor = WkbEditor(self)
-        if not self.geomType in (QGis.Point, QGis.Line, QGis.Polygon):
+
+        geomType = layer.geometryType()
+        if not geomType in (QGis.Point, QGis.Line, QGis.Polygon):
             self.close()
             return
-        if self.geomType == QGis.Point:
+        if geomType == QGis.Point:
             self.pointRubberGroup.hide()
 
-        self.featureRubber = QgsRubberBand(iface.mapCanvas())
-        self.currentPointRubber = QgsRubberBand(iface.mapCanvas())
+        self.featureRubber = QgsRubberBand(mapCanvas)
+        self.currentPointRubber = QgsRubberBand(mapCanvas)
         self.settings.setting("featureRubberColor").valueChanged.connect(self.updateFeatureRubber)
         self.settings.setting("featureRubberSize").valueChanged.connect(self.updateFeatureRubber)
         self.settings.setting("currentPointRubberSize").valueChanged.connect(self.updateCurrentPointRubber)
@@ -75,101 +67,89 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.updateFeatureRubber(None)
         self.updateCurrentPointRubber(None)
 
+        self.displayCombo.currentIndexChanged.connect(self.setEditor)
         self.displayCombo.setCurrentIndex(1)
 
         # GUI stuff
-        QObject.connect(self , SIGNAL("finished(int)") , self.finish)
-        QObject.connect(self.applyButton,    SIGNAL("clicked()"), self.applyGeometry)
-        QObject.connect(self.sketchGeometry, SIGNAL("clicked()"), self.geomChanged)
-        QObject.connect(self.geomTextEdit,   SIGNAL("textChanged()"), self.geomChanged)
-        QObject.connect(self.geomTextEdit,   SIGNAL("cursorPositionChanged()"), self.getEditor().cursorPositionChanged)
+        self.finished.connect(self.finish)
+        self.applyButton.clicked.connect(self.applyGeometry)
+        self.resetButton.clicked.connect(self.editor.resetGeom)
+
+        self.sketchGeometry.clicked.connect(self.geometryChanged)
+
+
         self.layerEditable()
-        QObject.connect(layer, SIGNAL("editingStopped() "), self.layerEditable)
-        QObject.connect(layer, SIGNAL("editingStarted() "), self.layerEditable)
+        layer.editingStopped.connect(self.layerEditable)
+        layer.editingStarted.connect(self.layerEditable)
+
         self.layerLabel.setText(layer.name())
         featureTitle = "%s" % feature[layer.displayField()]
         if featureTitle == "":
             featureTitle = "%s" % feature.id()
         self.featureEdit.setText(featureTitle)
 
-        # write geometry in text edit
-        self.getEditor().setGeom(self.initialGeom)
-
-    def getEditor(self):
+    def setEditor(self):
         idx = self.displayCombo.currentIndex()
         if idx == 0:
-            return self.cellEditor
+            editor = CellEditor
         elif idx == 1:
-            return self.wktEditor
+            editor = WktEditor
         elif idx == 2:
-            return self.wkbEditor
+            editor = WkbEditor
         else:
-            return None
+            self.editor = GeomEditor
+            return
+        self.editorLayout = QGridLayout(self.editorContainer)
+        self.editor = editor(self.layer, self.feature)
+        self.editorLayout.addWidget(self.editor, 0, 0, 1, 1)
 
-    @pyqtSignature("on_displayCombo_currentIndexChanged(int)")
-    def on_displayCombo_currentIndexChanged(self, idx):
-        self.getEditor().setGeom(self.modifiedGeom)
+        self.editor.currentPointChanged.connect(self.drawCurrentPoint)
+        self.editor.geometryChanged.connect(self.geometryChanged)
 
     def finish(self, state):
         self.featureRubber.reset()
         self.currentPointRubber.reset()
-        QObject.disconnect(self.layer, SIGNAL("editingStarted()"), self.layerEditable)
-        QObject.disconnect(self.layer, SIGNAL("editingStopped()"), self.layerEditable)
-        self.close()
-
-    @pyqtSignature("on_resetButton_clicked()")
-    def on_resetButton_clicked(self):
-        self.getEditor().setGeom(self.initialGeom)
-
-    @pyqtSignature("on_copyButton_clicked()")
-    def on_copyButton_clicked(self):
-        QApplication.clipboard().setText(self.geomTextEdit.toPlainText())
+        self.layer.editingStarted.disconnect(self.layerEditable)
+        self.layer.editingStopped.disconnect(self.layerEditable)
+        #self.close()
 
     def layerEditable(self):
         layerIsEditable = self.layer.isEditable()
-        self.geomTextEdit.setEnabled(layerIsEditable)
         self.resetButton.setEnabled(layerIsEditable)
         self.applyButton.setEnabled(layerIsEditable)
 
-    def geomChanged(self):
+    def geometryChanged(self):
         self.featureRubber.reset()
-        editor = self.getEditor()
-        if editor.isGeomValid():
-            bgColor = "white"
-            self.modifiedGeom = editor.getGeom()
+        if self.editor.isGeomValid():
             self.displayCombo.setEnabled(True)
             self.applyButton.setEnabled(self.layer.isEditable())
             geomStatus = "Geometry is valid"
             if self.sketchGeometry.isChecked():
-                self.featureRubber.setToGeometry(self.modifiedGeom, self.layer)
+                self.featureRubber.setToGeometry(self.editor.getGeom, self.layer)
         else:
-            bgColor = "red"
             self.applyButton.setEnabled(False)
             self.displayCombo.setEnabled(False)
-            geomStatus = "invalid"
-
-        p = self.geomTextEdit.palette()
-        p.setColor(QPalette.Base, QColor(bgColor))
-        self.geomTextEdit.setPalette(p)
+            geomStatus = "Geometry is not valid"
         self.geomStatusLabel.setText(geomStatus)
 
-    def currentPointChanged(self, point):
-        self.currentPointRubber.setToGeometry(point , self.layer)
+    @pyqtSlot(QgsGeometry)
+    def drawCurrentPoint(self, point):
+        self.currentPointRubber.setToGeometry(point, self.layer)
 
     def applyGeometry(self):
-        geometry = self.getEditor().getGeom()
-        if geometry:
+        geometry = self.editor.getGeom()
+        if geometry is not None:
             self.layer.changeGeometry(self.feature.id(), geometry)
-            self.iface.mapCanvas().refresh()
+            self.layer.triggerRepaint()
             self.close()
             
     def updateFeatureRubber(self, i):
         self.featureRubber.setColor(self.settings.value("featureRubberColor"))
         self.featureRubber.setWidth(self.settings.value("featureRubberSize"))
-        self.iface.mapCanvas().refresh()
+        self.layer.triggerRepaint()
         
     def updateCurrentPointRubber(self, i):
         self.currentPointRubber.setIconSize(self.settings.value("currentPointRubberSize"))
         self.currentPointRubber.setColor(self.settings.value("currentPointRubberColor"))
         self.currentPointRubber.setIcon(self.settings.value("currentPointRubberIcon"))
-        self.iface.mapCanvas().refresh()
+        self.layer.triggerRepaint()

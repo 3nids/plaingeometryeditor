@@ -38,6 +38,7 @@ class PlainGeometryEditor():
 
     def __init__(self, iface):
         self.iface = iface
+        self.mapCanvas = iface.mapCanvas()
    
     def initGui(self):
         self.mapToolAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/plaingeometryeditor-32.png"),
@@ -52,7 +53,7 @@ class PlainGeometryEditor():
         self.iface.removeToolBarIcon(self.mapToolAction)
         
     def mapToolInit(self):
-        canvas = self.iface.mapCanvas()
+        canvas = self.mapCanvas
         if self.mapToolAction.isChecked() is False:
             canvas.unsetMapTool(self.mapTool)
             return
@@ -63,11 +64,11 @@ class PlainGeometryEditor():
         canvas.mapToolSet.connect(self.mapToolChanged)
         
     def mapToolChanged(self, tool):
-        self.iface.mapCanvas().mapToolSet.disconnect(self.mapToolChanged)
+        self.mapCanvas.mapToolSet.disconnect(self.mapToolChanged)
         self.mapToolAction.setChecked(False)
-        self.iface.mapCanvas().unsetMapTool(self.mapTool)
+        self.mapCanvas.unsetMapTool(self.mapTool)
         
     def editGeometry(self, layer, feature):
-        dlg = GeomEditorDialog(self.iface, layer, feature)
+        dlg = GeomEditorDialog(layer, feature, self.mapCanvas, self.iface.mainWindow())
         dlg.show()
 
