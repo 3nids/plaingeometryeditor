@@ -29,9 +29,10 @@
 from PyQt4.QtGui import QColor
 from qgis.gui import QgsRubberBand
 
-from qgissettingmanager import *
+from ..qgissettingmanager import *
 
 pluginName = "plaingeometryeditor"
+
 
 class MySettings(SettingManager):
     def __init__(self):
