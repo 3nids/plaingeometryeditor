@@ -60,8 +60,9 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         # editors management
         self.editorLayout = QGridLayout(self.editorContainer)
         self.editor = GeomEditor(layer, feature.geometry())
+        self.displayCombo.setCurrentIndex(0)
         self.displayCombo.currentIndexChanged.connect(self.setEditor)
-        self.displayCombo.setCurrentIndex(1)
+        self.setEditor()
 
         # rubber bands
         self.featureRubber = QgsRubberBand(mapCanvas)
@@ -73,6 +74,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.settings.setting("currentPointRubberIcon").valueChanged.connect(self.updateCurrentPointRubber)
         self.updateFeatureRubber()
         self.updateCurrentPointRubber()
+        self.geometryChanged()
 
         # GUI signals connection
         self.finished.connect(self.finish)
@@ -94,11 +96,11 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.editorLayout.removeWidget(self.editor)
         geom = self.editor.getGeom()
         idx = self.displayCombo.currentIndex()
-        if idx == 0:
+        if idx == -99999:
             editor = CellEditor
-        elif idx == 1:
+        elif idx == 0:
             editor = WktEditor
-        elif idx == 2:
+        elif idx == 1:
             editor = WkbEditor
         else:
             self.editor = GeomEditor
