@@ -79,7 +79,10 @@ class WktEditor(QTextEdit, GeomEditor):
         self.setReadOnly(not layerIsEditable)
 
     def geomChanged(self):
-        self.geometryChanged.emit(self.getGeom())
+        geom = self.getGeom()
+        if geom is None:
+            geom = QgsGeometry()
+        self.geometryChanged.emit(geom)
 
     def emitCurrentPoint(self):
         if self.geomType == QGis.Point:
