@@ -45,8 +45,8 @@ class WkbEditor(QTextEdit, GeomEditor):
         QTextEdit.__init__(self, parent)
 
         self.setGeom(geometry)
-
         self.textChanged.connect(self.geomChanged)
+        self.layerEditable()
 
     def getGeom(self):
             geoText = unicode(self.toPlainText())

@@ -60,9 +60,9 @@ class WktEditor(QTextEdit, GeomEditor):
         QTextEdit.__init__(self, parent)
 
         self.setGeom(geometry)
-
         self.cursorPositionChanged.connect(self.emitCurrentPoint)
         self.textChanged.connect(self.geomChanged)
+        self.layerEditable()
 
     def getGeom(self):
         try:

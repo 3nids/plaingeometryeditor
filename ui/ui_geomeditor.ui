@@ -113,11 +113,6 @@
        <widget class="QComboBox" name="displayCombo">
         <item>
          <property name="text">
-          <string>cells</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
           <string>WKT</string>
          </property>
         </item>

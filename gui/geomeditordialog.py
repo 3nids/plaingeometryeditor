@@ -81,6 +81,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.applyButton.clicked.connect(self.applyGeometry)
         self.resetButton.clicked.connect(self.resetGeometry)
         self.sketchGeometry.clicked.connect(self.geometryChanged)
+        self.displayPointRubber.clicked.connect(self.currentPointRubber.reset)
         self.layerEditable()
         layer.editingStopped.connect(self.layerEditable)
         layer.editingStarted.connect(self.layerEditable)
@@ -128,6 +129,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
 
     def geometryChanged(self):
         self.featureRubber.reset()
+        self.currentPointRubber.reset()
         if self.editor.isGeomValid():
             self.displayCombo.setEnabled(True)
             self.applyButton.setEnabled(self.layer.isEditable())
@@ -142,8 +144,9 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
 
     @pyqtSlot(QgsGeometry)
     def drawCurrentPoint(self, point):
-        self.currentPointRubber.setToGeometry(point, None)
-        self.mapCanvas.refresh()
+        if self.displayPointRubber.isChecked():
+            self.currentPointRubber.setToGeometry(point, None)
+            self.mapCanvas.refresh()
 
     def applyGeometry(self):
         geometry = self.editor.getGeom()

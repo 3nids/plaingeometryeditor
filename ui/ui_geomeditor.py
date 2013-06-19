@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_geomeditor.ui'
 #
-# Created: Wed Jun 19 10:32:50 2013
+# Created: Wed Jun 19 15:12:08 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -64,7 +64,6 @@ class Ui_GeomEditor(object):
         self.gridLayout_3.addWidget(self.layerLabel, 0, 0, 1, 1)
         self.displayCombo = QtGui.QComboBox(self.w0)
         self.displayCombo.setObjectName(_fromUtf8("displayCombo"))
-        self.displayCombo.addItem(_fromUtf8(""))
         self.displayCombo.addItem(_fromUtf8(""))
         self.displayCombo.addItem(_fromUtf8(""))
         self.gridLayout_3.addWidget(self.displayCombo, 0, 4, 1, 1)
@@ -159,9 +158,8 @@ class Ui_GeomEditor(object):
         self.resetButton.setText(QtGui.QApplication.translate("GeomEditor", "Reset", None, QtGui.QApplication.UnicodeUTF8))
         self.applyButton.setText(QtGui.QApplication.translate("GeomEditor", "Apply", None, QtGui.QApplication.UnicodeUTF8))
         self.layerLabel.setText(QtGui.QApplication.translate("GeomEditor", "Feature", None, QtGui.QApplication.UnicodeUTF8))
-        self.displayCombo.setItemText(0, QtGui.QApplication.translate("GeomEditor", "cells", None, QtGui.QApplication.UnicodeUTF8))
-        self.displayCombo.setItemText(1, QtGui.QApplication.translate("GeomEditor", "WKT", None, QtGui.QApplication.UnicodeUTF8))
-        self.displayCombo.setItemText(2, QtGui.QApplication.translate("GeomEditor", "WKB", None, QtGui.QApplication.UnicodeUTF8))
+        self.displayCombo.setItemText(0, QtGui.QApplication.translate("GeomEditor", "WKT", None, QtGui.QApplication.UnicodeUTF8))
+        self.displayCombo.setItemText(1, QtGui.QApplication.translate("GeomEditor", "WKB", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("GeomEditor", "Display format", None, QtGui.QApplication.UnicodeUTF8))
         self.sketchGeometry.setTitle(QtGui.QApplication.translate("GeomEditor", "Sketch geometry", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("GeomEditor", "New geometry style", None, QtGui.QApplication.UnicodeUTF8))
