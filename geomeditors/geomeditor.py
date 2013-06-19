@@ -35,17 +35,14 @@ class GeomEditor(QWidget):
     currentPointChanged = pyqtSignal(QgsGeometry)
     geometryChanged = pyqtSignal(QgsGeometry)
 
-    def __init__(self, layer, feature):
+    def __init__(self, layer, geometry):
         QWidget.__init__(self)
-        self.initialGeom = QgsGeometry(feature.geometry())
         self.geomType = layer.geometryType()
         self.layer = layer
+        self.initialGeom = QgsGeometry(geometry)
 
         layer.editingStopped.connect(self.layerEditable)
         layer.editingStarted.connect(self.layerEditable)
-
-    def resetGeom(self):
-        self.setGeom(self.initialGeom)
 
     def isGeomValid(self):
         return self.getGeom() is not None
@@ -54,7 +51,7 @@ class GeomEditor(QWidget):
         """
         must be overridden in geom editor subclass
         """
-        return None
+        return self.initialGeom
 
     def setGeom(self, geom):
         """

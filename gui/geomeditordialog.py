@@ -46,6 +46,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.mapCanvas = mapCanvas
         self.setAttribute(Qt.WA_DeleteOnClose)
         self.feature = feature
+        self.initialGeometry = QgsGeometry(feature.geometry())
         self.layer = layer
 
         # close if no geom, hide "sketch current point" if not needed
@@ -58,7 +59,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
 
         # editors management
         self.editorLayout = QGridLayout(self.editorContainer)
-        self.editor = GeomEditor(layer, feature)
+        self.editor = GeomEditor(layer, feature.geometry())
         self.displayCombo.currentIndexChanged.connect(self.setEditor)
         self.displayCombo.setCurrentIndex(1)
 
@@ -76,7 +77,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         # GUI signals connection
         self.finished.connect(self.finish)
         self.applyButton.clicked.connect(self.applyGeometry)
-        self.resetButton.clicked.connect(self.editor.resetGeom)
+        self.resetButton.clicked.connect(self.resetGeometry)
         self.sketchGeometry.clicked.connect(self.geometryChanged)
         self.layerEditable()
         layer.editingStopped.connect(self.layerEditable)
@@ -91,6 +92,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
 
     def setEditor(self):
         self.editorLayout.removeWidget(self.editor)
+        geom = self.editor.getGeom()
         idx = self.displayCombo.currentIndex()
         if idx == 0:
             editor = CellEditor
@@ -101,11 +103,14 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         else:
             self.editor = GeomEditor
             return
-        self.editor = editor(self.layer, self.feature)
+        self.editor = editor(self.layer, geom)
         self.editorLayout.addWidget(self.editor, 0, 0, 1, 1)
 
         self.editor.currentPointChanged.connect(self.drawCurrentPoint)
         self.editor.geometryChanged.connect(self.geometryChanged)
+
+    def resetGeometry(self):
+        self.editor.setGeom(self.initialGeometry)
 
     def finish(self, state):
         self.featureRubber.reset()

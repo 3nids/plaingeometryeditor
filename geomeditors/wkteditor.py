@@ -55,11 +55,11 @@ class WktEditor(QTextEdit, GeomEditor):
     currentPointChanged = pyqtSignal(QgsGeometry)
     geometryChanged = pyqtSignal(QgsGeometry)
 
-    def __init__(self, layer, feature, parent=None):
-        GeomEditor.__init__(self, layer, feature)
+    def __init__(self, layer, geometry, parent=None):
+        GeomEditor.__init__(self, layer, geometry)
         QTextEdit.__init__(self, parent)
 
-        self.setGeom(feature.geometry())
+        self.setGeom(geometry)
 
         self.cursorPositionChanged.connect(self.emitCurrentPoint)
         self.textChanged.connect(self.geomChanged)
