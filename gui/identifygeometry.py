@@ -42,7 +42,7 @@ class IdentifyGeometry(QgsMapToolIdentify):
     def canvasReleaseEvent(self, mouseEvent):
         results = self.identify(mouseEvent.x(), mouseEvent.y(), self.TopDownStopAtFirst, self.VectorLayer)
         if len(results) > 0:
-            self.geomIdentified.emit(results[0].mLayer, results[0].mFeature)
+            self.geomIdentified.emit(results[0].mLayer, QgsFeature(results[0].mFeature))
 
     def cursorPixmap(self):
         return {
