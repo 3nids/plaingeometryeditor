@@ -1,5 +1,9 @@
 
-### Version 2.0.1 36.06.2013
+### Version 2.0.2 27.06.2013
+
+# Fix string creation
+
+### Version 2.0.1 26.06.2013
 
 * Fix for python 2.6
 
