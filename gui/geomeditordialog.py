@@ -88,9 +88,12 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
 
         # set texts in UI
         self.layerLabel.setText(layer.name())
-        featureTitle = "%s" % feature[layer.displayField()]
+        try:
+            featureTitle = str(feature[layer.displayField()])
+        except KeyError:
+            featureTitle = ""
         if featureTitle == "":
-            featureTitle = "%s" % feature.id()
+            featureTitle = str(feature.id())
         self.featureEdit.setText(featureTitle)
 
     def setEditor(self):
