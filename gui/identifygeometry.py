@@ -27,6 +27,7 @@
 #---------------------------------------------------------------------
 
 from PyQt4.QtCore import pyqtSignal
+from PyQt4.QtGui import QPixmap, QCursor
 from qgis.core import QgsVectorLayer, QgsFeature
 from qgis.gui import QgsMapToolIdentify
 
@@ -37,33 +38,47 @@ class IdentifyGeometry(QgsMapToolIdentify):
     def __init__(self, canvas):
         self.canvas = canvas
         QgsMapToolIdentify.__init__(self, canvas)
-        #self.setCursor(QCursor(QPixmap(self.cursorPixmap()) , 1 , 1))
+        self.customCursor()
 
     def canvasReleaseEvent(self, mouseEvent):
         results = self.identify(mouseEvent.x(), mouseEvent.y(), self.TopDownStopAtFirst, self.VectorLayer)
         if len(results) > 0:
             self.geomIdentified.emit(results[0].mLayer, QgsFeature(results[0].mFeature))
 
-    # def cursorPixmap(self):
-    #     return {
-    #         "28 16 3 1",
-    #         "# c None",
-    #         "a c #000000",
-    #         ". c #ffffff",
-    #         ".###########################",
-    #         "...#################..######",
-    #         ".aa..############...aa...###",
-    #         "#.aaa..#########.aaaaaaaa.##",
-    #         "#.aaaaa..######.aa......aa.#",
-    #         "##.aaaaaa..###.a..######..##",
-    #         "##.aaaaaa.###.a.#####......#",
-    #         "##.aaaaa.####.a.#####.aaaaa.",
-    #         "###.aaaaa.###.a.#####.aaaaa.",
-    #         "###.aa.aaa.###.a..####...aa.",
-    #         "####..#..aa.###.aa......aa.#",
-    #         "####.####.aa.###.aaaaaaaa.##",
-    #         "##########.aa..##...aa...###",
-    #         "###########.aa..####..######",
-    #         "############.a.#############",
-    #         "#############.##############"
-    #     }
+    def customCursor(self):
+        try:
+            cursor = ["27 27 3 1",
+                      "# c None",
+                      "a c #000000",
+                      ". c #ffffff",
+                      "###########################",
+                      "###########################",
+                      "###########################",
+                      "###########################",
+                      "###########################",
+                      ".##########################",
+                      "...#################.######",
+                      ".aa..############...a...###",
+                      "#.aaa..#########.aaaaaaa.##",
+                      "#.aaaaa..######.aa.....aa.#",
+                      "##.aaaaaa..###.a..#####..##",
+                      "##.aaaaaa.###.a.####......#",
+                      "##.aaaaa.####.a.####.aaaaa.",
+                      "###.aaaaa.###.a.#####.aaaa.",
+                      "###.aa.aaa.###.a..###...aa.",
+                      "####..#..aa.###.aa.....aa.#",
+                      "####.####.aa.###.aaaaaaa.##",
+                      "##########.aa.###...a...###",
+                      "###########.aa..####.######",
+                      "############.aa.###########",
+                      "#############.a.###########",
+                      "##############.############",
+                      "###########################",
+                      "###########################",
+                      "###########################",
+                      "###########################",
+                      "###########################"]
+            self.setCursor(QCursor(QPixmap(cursor), 1, 6))
+        except AttributeError:
+            # not available yet in API
+            pass
