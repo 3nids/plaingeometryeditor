@@ -44,29 +44,19 @@ class PlainGeometryEditor():
         self.mapToolAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/plaingeometryeditor-32.png"),
                                      "Plain Geometry Editor", self.iface.mainWindow())
         self.mapToolAction.setCheckable(True)
-        self.mapToolAction.triggered.connect(self.mapToolInit)
+        self.mapTool = IdentifyGeometry(self.mapCanvas)
+        self.mapTool.geomIdentified.connect(self.editGeometry)
+        self.mapTool.setAction(self.mapToolAction)
+        self.mapToolAction.triggered.connect(self.setMapTool)
         self.iface.addToolBarIcon(self.mapToolAction)
         self.iface.addPluginToMenu("&Plain Geometry Editor", self.mapToolAction)
                   
     def unload(self):
         self.iface.removePluginMenu("&Plain Geometry Editor", self.mapToolAction)
         self.iface.removeToolBarIcon(self.mapToolAction)
-        
-    def mapToolInit(self):
-        canvas = self.mapCanvas
-        if self.mapToolAction.isChecked() is False:
-            canvas.unsetMapTool(self.mapTool)
-            return
-        self.mapToolAction.setChecked(True)
-        self.mapTool = IdentifyGeometry(canvas)
-        self.mapTool.geomIdentified.connect(self.editGeometry)
-        canvas.setMapTool(self.mapTool)
-        canvas.mapToolSet.connect(self.mapToolChanged)
-        
-    def mapToolChanged(self, tool):
-        self.mapCanvas.mapToolSet.disconnect(self.mapToolChanged)
-        self.mapToolAction.setChecked(False)
-        self.mapCanvas.unsetMapTool(self.mapTool)
+
+    def setMapTool(self):
+        self.mapCanvas.setMapTool(self.mapTool)
         
     def editGeometry(self, layer, feature):
         dlg = GeomEditorDialog(layer, feature, self.mapCanvas, self.iface.mainWindow())
