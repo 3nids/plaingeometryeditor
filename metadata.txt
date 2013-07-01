@@ -1,14 +1,14 @@
 [general]
 name=Plain Geometry Editor
 description=Edit geometry of features using plain text (WKT, WKB)
-version=2.1
+version=2.2
 qgisMinimumVersion=2.0
 author=Denis Rouzaud
 email=denis.rouzaud@gmail.com
 
 experimental=False
 
-icon=icons/plaingeometryeditor-32.png
+icon=icons/plaingeometryeditor-128.png
 tags=geometry,wkt
 homepage=http://3nids.github.io/plaingeometryeditor
 tracker=https://github.com/3nids/plaingeometryeditor/issues

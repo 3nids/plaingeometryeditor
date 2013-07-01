@@ -1,4 +1,9 @@
 
+### Version 2.2 01.07.2013
+
+* Changed plugin icon
+* Added help link in menu
+
 ### Version 2.1 01.07.2013
 
 * Custom mouse cursor
