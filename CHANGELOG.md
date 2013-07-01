@@ -1,7 +1,12 @@
 
+### Version 2.1 01.07.2013
+
+* Custom mouse cursor
+* Better configuration of the map tool
+
 ### Version 2.0.2 27.06.2013
 
-# Fix string creation
+* Fix string creation
 
 ### Version 2.0.1 26.06.2013
 
