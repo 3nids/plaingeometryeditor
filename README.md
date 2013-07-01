@@ -1,4 +1,6 @@
-## What ? 
+![Plain Geometry Editor](https://raw.github.com/3nids/plaingeometryeditor/25f1a0ad235e9c23fcbf668d426813d018a18a0d/icons/plaingeometryeditor-128.png)
+
+## What ?
 
 Plain Geometry Editor is a [QGIS](http://www.qgis.org) plugin to edit geometry of features using WKT (well-known text) or WKB (well-know binary.
 
