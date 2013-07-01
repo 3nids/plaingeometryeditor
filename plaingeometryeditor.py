@@ -25,8 +25,8 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 #---------------------------------------------------------------------
-
-from PyQt4.QtGui import QAction, QIcon
+from PyQt4.QtCore import QUrl
+from PyQt4.QtGui import QAction, QIcon, QDesktopServices
 
 from gui.identifygeometry import IdentifyGeometry
 from gui.geomeditordialog import GeomEditorDialog
@@ -41,7 +41,12 @@ class PlainGeometryEditor():
         self.mapCanvas = iface.mapCanvas()
    
     def initGui(self):
-        self.mapToolAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/plaingeometryeditor-32.png"),
+        # help
+        self.helpAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/help.svg"), "Help", self.iface.mainWindow())
+        self.helpAction.triggered.connect(lambda: QDesktopServices().openUrl(QUrl("http://3nids.github.io/plaingeometryeditor")))
+        self.iface.addPluginToMenu("&Plain Geometry Editor", self.helpAction)
+        # map tool action
+        self.mapToolAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/plaingeometryeditor.svg"),
                                      "Plain Geometry Editor", self.iface.mainWindow())
         self.mapToolAction.setCheckable(True)
         self.mapTool = IdentifyGeometry(self.mapCanvas)
@@ -52,6 +57,7 @@ class PlainGeometryEditor():
         self.iface.addPluginToMenu("&Plain Geometry Editor", self.mapToolAction)
                   
     def unload(self):
+        self.iface.removePluginMenu("&Plain Geometry Editor", self.helpAction)
         self.iface.removePluginMenu("&Plain Geometry Editor", self.mapToolAction)
         self.iface.removeToolBarIcon(self.mapToolAction)
 

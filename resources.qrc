@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/plugins/plaingeometryeditor" >
-        <file>icons/plaingeometryeditor-32.png</file>
+        <file>icons/plaingeometryeditor.svg</file>
+        <file>icons/help.svg</file>
     </qresource>
 </RCC>
