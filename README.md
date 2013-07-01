@@ -1,4 +1,4 @@
-![Plain Geometry Editor](https://raw.github.com/3nids/plaingeometryeditor/25f1a0ad235e9c23fcbf668d426813d018a18a0d/icons/plaingeometryeditor-128.png)
+![Plain Geometry Editor](https://raw.github.com/3nids/plaingeometryeditor/master/icons/plaingeometryeditor-128.png)
 
 ## What ?
 
@@ -8,9 +8,10 @@ Demo on [youtube](http://www.youtube.com/watch?v=NrDFMZS41BA&hd=1)
 
 ## How ?
 
-Select the layer you want to edit, and turn editing on. 
-Click then on the compass icon to identify a feature.
-If a feature is found, a dialog with a text area containing the WKT of the feature can be edited.
+1. Select the layer you want to edit, and turn editing on.
+2. Click then on the ![plugin icon](https://raw.github.com/3nids/plaingeometryeditor/master/icons/plaingeometryeditor-24.png) to identify a feature.
+3. If a feature is found, a dialog opens in which you can edit the geometry in WKT or WKB.
+
 Changes can only be applied if the new geometry is valid!
  
 
