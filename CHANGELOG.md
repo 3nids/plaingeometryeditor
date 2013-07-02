@@ -21,4 +21,7 @@
 
 * Added WKB editor
 * In WKT editor, highlights the current point
+* Geometry validation
+* New identification method on canvas
+* Can copy to clipboard in offline editing mode
 * Updated for QGIS 2.0
