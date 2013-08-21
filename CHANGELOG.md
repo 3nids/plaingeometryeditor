@@ -1,4 +1,10 @@
 
+### Version 2.3 21.08.2013
+
+* [fix #4] handles special characters
+* new icon coherent with identify icon
+* use a Makefile
+
 ### Version 2.2 01.07.2013
 
 * Changed plugin icon
