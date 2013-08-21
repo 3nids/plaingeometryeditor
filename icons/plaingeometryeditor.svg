@@ -7,12 +7,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="256"
-   height="256"
+   width="24"
+   height="24"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="mouse-pointer.svg">
+   sodipodi:docname="plaingeometryeditor.svg"
+   inkscape:export-filename="/home/denis/Documents/qgis/plugins/plaingeometryeditor/icons/plaingeometryeditor-128.png"
+   inkscape:export-xdpi="480"
+   inkscape:export-ydpi="480">
   <metadata
      id="metadata122">
     <rdf:RDF>
@@ -38,28 +41,15 @@
      inkscape:window-height="936"
      id="namedview120"
      showgrid="false"
-     inkscape:zoom="1.3964619"
-     inkscape:cx="258.42131"
-     inkscape:cy="121.1743"
+     inkscape:zoom="7.8995814"
+     inkscape:cx="14.038409"
+     inkscape:cy="11.994689"
      inkscape:window-x="397"
      inkscape:window-y="107"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg2" />
   <title
      id="title4">Mouse Pointer</title>
-  <g
-     id="g6"
-     transform="matrix(0.59683458,0,0,0.61779674,-4.887614,-0.21119776)">
-    <title
-       id="title8">Layer 1</title>
-    <metadata
-       id="svg_35">image/svg+xml</metadata>
-    <path
-       id="path827"
-       d="M 201.45399,112.872 18.385411,12.7151 96.994012,207.909 128.29202,157.233 190.176,224.875 213.61301,202.03799 150.34502,135.04401 201.454,112.872 z"
-       inkscape:connector-curvature="0"
-       style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:8;stroke-linecap:round;stroke-linejoin:round" />
-  </g>
   <defs
      id="defs12">
     <linearGradient
@@ -388,7 +378,7 @@
     </linearGradient>
   </defs>
   <circle
-     transform="matrix(2.9879269,0,0,2.9879269,73.326234,72.868524)"
+     transform="matrix(0.2868073,0,0,0.2868073,-0.3093702,0.32646333)"
      style="fill:#6d9ccf;stroke:#34497d;stroke-miterlimit:10"
      sodipodi:ry="28.677999"
      sodipodi:rx="28.677999"
@@ -402,18 +392,32 @@
   <path
      style="opacity:0.3;fill:#ffffff"
      inkscape:connector-curvature="0"
-     d="m 99.539316,184.01343 c 2.187154,-25.15535 7.099304,-40.24737 22.720184,-55.86826 16.86983,-16.86983 32.4937,-24.6982 62.01442,-31.415055 14.5034,-3.298671 -10.6191,-14.234483 -45.38362,-1.228044 -18.67454,6.985779 -37.62994,25.218109 -44.281067,51.786749 -8.058439,32.16803 3.929128,48.24307 4.930083,36.72461 z"
+     d="M 2.2067902,10.99512 C 2.4167323,8.5804913 2.8882433,7.1318273 4.3876717,5.6323983 6.0069852,4.0130853 7.5067006,3.2616493 10.340356,2.6169073 11.732519,2.3002713 9.321043,1.2505573 5.984041,2.4990293 4.1914957,3.1695853 2.371991,4.9196833 1.7335578,7.4699733 0.96003844,10.557741 2.1107098,12.100763 2.2067902,10.99512 z"
      id="path5" />
   <text
      xml:space="preserve"
-     style="font-size:119.51708221px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="114.26084"
-     y="220.47214"
+     style="font-size:11.4722929px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#9c9c9c;stroke-width:0.09598873;stroke-opacity:1;font-family:Sans"
+     x="3.6198907"
+     y="14.494745"
      id="text3764"
      sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
        id="tspan3766"
-       x="114.26084"
-       y="220.47214"
-       style="font-size:179.27560425px;font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#646464;stroke-width:4.4818902;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Courier 10 Pitch;-inkscape-font-specification:Courier 10 Pitch Bold Italic">G</tspan></text>
+       x="3.6198907"
+       y="14.494745"
+       style="font-size:17.20843697px;font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#9c9c9c;stroke-width:0.43021095;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Courier 10 Pitch;-inkscape-font-specification:Courier 10 Pitch Bold Italic">G</tspan></text>
+  <g
+     id="g6"
+     transform="matrix(0.05728939,0,0,0.05930152,9.8370676,9.3061593)"
+     style="stroke:#454545;stroke-width:8.57827568;stroke-miterlimit:7;stroke-opacity:1;stroke-dasharray:none">
+    <title
+       id="title8">Layer 1</title>
+    <metadata
+       id="svg_35">image/svg+xml</metadata>
+    <path
+       id="path827"
+       d="M 201.45399,112.872 18.385411,12.7151 96.994012,207.909 128.29202,157.233 190.176,224.875 213.61301,202.03799 150.34502,135.04401 201.454,112.872 z"
+       inkscape:connector-curvature="0"
+       style="fill:#ffffff;fill-rule:evenodd;stroke:#454545;stroke-width:8.57827568;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:7;stroke-opacity:1;stroke-dasharray:none" />
+  </g>
 </svg>
