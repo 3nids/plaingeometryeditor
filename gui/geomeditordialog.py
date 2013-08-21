@@ -89,7 +89,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         # set texts in UI
         self.layerLabel.setText(layer.name())
         try:
-            featureTitle = str(feature[layer.displayField()])
+            featureTitle = unicode(feature[layer.displayField()])
         except KeyError:
             featureTitle = ""
         if featureTitle == "":
