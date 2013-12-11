@@ -65,6 +65,7 @@ class PlainGeometryEditor():
         self.mapCanvas.setMapTool(self.mapTool)
         
     def editGeometry(self, layer, feature):
-        dlg = GeomEditorDialog(layer, feature, self.mapCanvas, self.iface.mainWindow())
-        dlg.show()
+        # save dlg so rubber is properly cleaned
+        self.dlg = GeomEditorDialog(layer, feature, self.mapCanvas, self.iface.mainWindow())
+        self.dlg.show()
 

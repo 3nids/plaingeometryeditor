@@ -77,7 +77,6 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.geometryChanged()
 
         # GUI signals connection
-        self.finished.connect(self.finish)
         self.applyButton.clicked.connect(self.applyGeometry)
         self.resetButton.clicked.connect(self.resetGeometry)
         self.sketchGeometry.clicked.connect(self.geometryChanged)
@@ -118,12 +117,11 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
     def resetGeometry(self):
         self.editor.setGeom(self.initialGeometry)
 
-    def finish(self, state):
+    def closeEvent(self, e):
         self.featureRubber.reset()
         self.currentPointRubber.reset()
         self.layer.editingStarted.disconnect(self.layerEditable)
         self.layer.editingStopped.disconnect(self.layerEditable)
-        #self.close()
 
     def layerEditable(self):
         layerIsEditable = self.layer.isEditable()
