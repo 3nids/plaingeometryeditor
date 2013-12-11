@@ -1,4 +1,9 @@
 
+### Version 2.4 11.12.2013
+
+* use new identify mode for QGIS >= 2.1
+* fix: removes the rubber band on dialog close
+
 ### Version 2.3 21.08.2013
 
 * [fix #4] handles special characters
