@@ -39,6 +39,7 @@ class PlainGeometryEditor():
     def __init__(self, iface):
         self.iface = iface
         self.mapCanvas = iface.mapCanvas()
+        self.dlgs = []
    
     def initGui(self):
         # help
@@ -55,7 +56,7 @@ class PlainGeometryEditor():
         self.mapToolAction.triggered.connect(self.setMapTool)
         self.iface.addToolBarIcon(self.mapToolAction)
         self.iface.addPluginToMenu("&Plain Geometry Editor", self.mapToolAction)
-                  
+
     def unload(self):
         self.iface.removePluginMenu("&Plain Geometry Editor", self.helpAction)
         self.iface.removePluginMenu("&Plain Geometry Editor", self.mapToolAction)
@@ -65,7 +66,9 @@ class PlainGeometryEditor():
         self.mapCanvas.setMapTool(self.mapTool)
         
     def editGeometry(self, layer, feature):
-        # save dlg so rubber is properly cleaned
-        self.dlg = GeomEditorDialog(layer, feature, self.mapCanvas, self.iface.mainWindow())
-        self.dlg.show()
+        dlg = GeomEditorDialog(layer, feature, self.mapCanvas, self.iface.mainWindow())
+        dlg.show()
+        # save dlg so it does not get out of scope and layer is properly disconnect
+        self.dlgs.append(dlg)
+
 
