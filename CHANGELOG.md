@@ -1,4 +1,8 @@
 
+### Version 2.4.1 28.02.2013
+
+* fix when multiple dialogs are kept open
+
 ### Version 2.4 11.12.2013
 
 * use new identify mode for QGIS >= 2.1
