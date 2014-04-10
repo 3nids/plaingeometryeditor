@@ -44,6 +44,10 @@ class GeomEditor(QWidget):
         layer.editingStopped.connect(self.layerEditable)
         layer.editingStarted.connect(self.layerEditable)
 
+    def closeEditor(self):
+        self.layer.editingStopped.disconnect(self.layerEditable)
+        self.layer.editingStarted.disconnect(self.layerEditable)
+
     def isGeomValid(self):
         return self.getGeom() is not None
           

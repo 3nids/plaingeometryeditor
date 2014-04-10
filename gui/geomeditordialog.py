@@ -108,7 +108,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         else:
             self.editor = GeomEditor
             return
-        self.editor = editor(self.layer, geom)
+        self.editor = editor(self.layer, geom, self)
         self.editorLayout.addWidget(self.editor, 0, 0, 1, 1)
 
         self.editor.currentPointChanged.connect(self.drawCurrentPoint)
@@ -122,6 +122,8 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.currentPointRubber.reset()
         self.layer.editingStarted.disconnect(self.layerEditable)
         self.layer.editingStopped.disconnect(self.layerEditable)
+        self.editor.closeEditor()
+        QDialog.closeEvent(self, e)
 
     def layerEditable(self):
         layerIsEditable = self.layer.isEditable()
