@@ -1,4 +1,10 @@
 
+### Version 2.4.2 10.04.2014
+
+* fix crash when switching layer editing mode
+
+* fix when multiple dialogs are kept open
+
 ### Version 2.4.1 28.02.2013
 
 * fix when multiple dialogs are kept open
