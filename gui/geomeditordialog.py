@@ -1,3 +1,4 @@
+from builtins import str
 #-----------------------------------------------------------
 #
 # Plain Geometry Editor is a QGIS plugin to edit geometries
@@ -26,9 +27,9 @@
 #
 #---------------------------------------------------------------------
 
-from PyQt4.QtCore import Qt, pyqtSlot
-from PyQt4.QtGui import QGridLayout, QDialog
-from qgis.core import QGis, QgsGeometry
+from qgis.PyQt.QtCore import Qt, pyqtSlot
+from qgis.PyQt.QtWidgets import QGridLayout, QDialog
+from qgis.core import Qgis, QgsGeometry, QgsWkbTypes
 from qgis.gui import QgsRubberBand
 
 from ..qgissettingmanager import SettingDialog
@@ -42,7 +43,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         QDialog.__init__(self, parent)
         self.setupUi(self)
         self.settings = MySettings()
-        SettingDialog.__init__(self, self.settings, False, True)
+        SettingDialog.__init__(self, self.settings)
         self.mapCanvas = mapCanvas
         self.setAttribute(Qt.WA_DeleteOnClose)
         self.feature = feature
@@ -51,10 +52,10 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
 
         # close if no geom, hide "sketch current point" if not needed
         geomType = layer.geometryType()
-        if not geomType in (QGis.Point, QGis.Line, QGis.Polygon):
+        if not geomType in (QgsWkbTypes.PointGeometry, QgsWkbTypes.LineGeometry, QgsWkbTypes.PolygonGeometry):
             self.close()
             return
-        if geomType == QGis.Point:
+        if geomType == QgsWkbTypes.PointGeometry:
             self.pointRubberGroup.hide()
 
         # editors management
@@ -88,7 +89,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         # set texts in UI
         self.layerLabel.setText(layer.name())
         try:
-            featureTitle = unicode(feature[layer.displayField()])
+            featureTitle = str(feature[layer.displayField()])
         except KeyError:
             featureTitle = ""
         if featureTitle == "":

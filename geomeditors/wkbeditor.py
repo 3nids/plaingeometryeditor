@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from builtins import str
 #-----------------------------------------------------------
 #
 # Plain Geometry Editor is a QGIS plugin to edit geometries
@@ -25,11 +27,11 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 #---------------------------------------------------------------------
-from PyQt4.QtCore import pyqtSignal
-from PyQt4.QtGui import QTextEdit
+from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtWidgets import QTextEdit
 from qgis.core import QgsGeometry
 
-from geomeditor import GeomEditor
+from .geomeditor import GeomEditor
 
 import binascii
 
@@ -49,7 +51,7 @@ class WkbEditor(QTextEdit, GeomEditor):
         self.layerEditable()
 
     def getGeom(self):
-            geoText = unicode(self.toPlainText())
+            geoText = str(self.toPlainText())
             geom = self.wkb2qgis(geoText)
             if geom.isGeosValid():
                 return geom

@@ -26,7 +26,7 @@
 #
 #---------------------------------------------------------------------
 
-from PyQt4.QtGui import QColor
+from qgis.PyQt.QtGui import QColor
 from qgis.gui import QgsRubberBand
 
 from ..qgissettingmanager import *
@@ -38,11 +38,11 @@ class MySettings(SettingManager):
     def __init__(self):
         SettingManager.__init__(self, pluginName)
 
-        self.addSetting("sketchGeometry", "bool", "global",  True)
-        self.addSetting("featureRubberColor", "color", "global",  QColor(0, 0, 255))
-        self.addSetting("featureRubberSize", "double", "global",  .6)
-        self.addSetting("featureRubberAlpha", "integer", "global",  100)
-        self.addSetting("currentPointRubberColor", "color", "global",  QColor(255, 0, 0))
-        self.addSetting("currentPointRubberIcon", "integer", "global",  int(QgsRubberBand.ICON_BOX))
-        self.addSetting("currentPointRubberSize", "integer", "global",  3)
-        self.addSetting("displayPointRubber", "bool", "global",  True)
+        self.add_setting(Bool("sketchGeometry", Scope.Global,  True))
+        self.add_setting(Color("featureRubberColor", Scope.Global,  QColor(0, 0, 255)))
+        self.add_setting(Double("featureRubberSize", Scope.Global,  .6))
+        self.add_setting(Integer("featureRubberAlpha", Scope.Global,  100))
+        self.add_setting(Color("currentPointRubberColor", Scope.Global,  QColor(255, 0, 0)))
+        self.add_setting(Integer("currentPointRubberIcon", Scope.Global,  int(QgsRubberBand.ICON_BOX)))
+        self.add_setting(Integer("currentPointRubberSize", Scope.Global,  3))
+        self.add_setting(Bool("displayPointRubber", Scope.Global,  True))

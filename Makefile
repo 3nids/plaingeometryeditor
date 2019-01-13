@@ -12,6 +12,7 @@
 # Makefile for a PyQGIS plugin 
 
 # global
+DEPLOY_PATH = .local/share/QGIS/QGIS3/profiles/default/python/plugins
 PLUGINNAME = plaingeometryeditor
 PY_FILES = __init__.py $(PLUGINNAME).py
 EXTRAS = metadata.txt resources.qrc
@@ -32,13 +33,13 @@ ui: $(UI_FILES)
 resources: $(RC_FILES)
 
 $(UI_FILES): ui/%.py: ui/%.ui
-	pyuic4 -o $@ $<
+	pyuic5 -o $@ $<
 
 $(RC_FILES): %.py: %.qrc
-	pyrcc4 -o $@ $<
+	pyrcc5 -o $@ $<
 
 $(LN_FILES): i18n/%.qm: i18n/%.ts
-	lrelease-qt4 $<
+	lrelease-qt5 $<
 
 clean:
 	rm -f $(GEN_FILES) *.pyc
@@ -46,8 +47,8 @@ clean:
 compile: $(UI_FILES) $(RC_FILES) $(LN_FILES)
 
 transup:
-	pylupdate4 -noobsolete $(UI_SOURCES) $(PLUGINNAME).py gui/*.py core/*.py -ts i18n/$(PLUGINNAME)_fr.ts
+	pylupdate5 -noobsolete $(UI_SOURCES) $(PLUGINNAME).py gui/*.py core/*.py -ts i18n/$(PLUGINNAME)_fr.ts
 
 deploy:
-	mkdir -p $(HOME)/.qgis2/python/plugins/$(PLUGINNAME)
-	cp -rvf * $(HOME)/.qgis2/python/plugins/$(PLUGINNAME)/
+	mkdir -p $(HOME)/$(DEPLOY_PATH)/$(PLUGINNAME)
+	cp -rvf * $(HOME)/$(DEPLOY_PATH)/$(PLUGINNAME)/
