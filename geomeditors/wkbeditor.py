@@ -59,7 +59,7 @@ class WkbEditor(QTextEdit, GeomEditor):
                 return None
 
     def setGeom(self, geometry):
-        hexText = binascii.b2a_hex(geometry.asWkb())
+        hexText = str(binascii.b2a_hex(geometry.asWkb()))
         self.setText(hexText)
 
     def layerEditable(self):

@@ -30,7 +30,8 @@ from builtins import str
 
 from qgis.PyQt.QtCore import Qt, pyqtSignal
 from qgis.PyQt.QtWidgets import QTextEdit
-from qgis.core import QgsGeometry, QgsPoint, Qgis, QgsWkbTypes
+from qgis.PyQt.QtGui import QTextCursor
+from qgis.core import QgsGeometry, QgsPointXY, Qgis, QgsWkbTypes
 
 from .geomeditor import GeomEditor
 
@@ -121,6 +122,6 @@ class WktEditor(QTextEdit, GeomEditor):
                     if mm:
                         x = float(pointText[:mm.end()])
                         y = float(pointText[mm.end():])
-                        currPointGeom = QgsGeometry().fromPoint(QgsPoint(x, y))
+                        currPointGeom = QgsGeometry().fromPointXY(QgsPointXY(x, y))
                         #print "point ",x,y
         self.currentPointChanged.emit(currPointGeom)
