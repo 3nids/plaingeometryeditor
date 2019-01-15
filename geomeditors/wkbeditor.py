@@ -37,7 +37,6 @@ import binascii
 
 SRID_FLAG = 0x20000000
 
-
 class WkbEditor(QTextEdit, GeomEditor):
     currentPointChanged = pyqtSignal(QgsGeometry)
     geometryChanged = pyqtSignal(QgsGeometry)
@@ -51,7 +50,7 @@ class WkbEditor(QTextEdit, GeomEditor):
         self.layerEditable()
 
     def getGeom(self):
-            geoText = str(self.toPlainText())
+            geoText = self.toPlainText()
             geom = self.wkb2qgis(geoText)
             if geom.isGeosValid():
                 return geom
@@ -59,7 +58,7 @@ class WkbEditor(QTextEdit, GeomEditor):
                 return None
 
     def setGeom(self, geometry):
-        hexText = str(binascii.b2a_hex(geometry.asWkb()))
+        hexText = binascii.b2a_hex(geometry.asWkb()).decode("utf-8")
         self.setText(hexText)
 
     def layerEditable(self):
@@ -88,11 +87,11 @@ class WkbEditor(QTextEdit, GeomEditor):
         wkb = binascii.a2b_hex("%08x" % value)
         wkb = wkb[::-1]
         wkb = binascii.b2a_hex(wkb)
-        return wkb
+        return wkb.decode("UTF-8")
 
     def decodeBinary(self, wkb):
         """Decode the binary wkb and return as a hex string"""
         value = binascii.a2b_hex(wkb)
         value = value[::-1]
         value = binascii.b2a_hex(value)
-        return value
+        return value.decode("UTF-8")

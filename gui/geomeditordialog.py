@@ -157,7 +157,10 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         if geometry is not None:
             self.layer.changeGeometry(self.feature.id(), geometry)
             self.layer.updateExtents()
-            self.layer.setCacheImage(None)
+            try:
+                self.layer.setCacheImage(None)
+            except:
+                pass
             self.layer.triggerRepaint()
             
     def updateFeatureRubber(self):
