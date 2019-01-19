@@ -55,6 +55,6 @@ compile: $(UI_FILES) $(RC_FILES) $(LN_FILES)
 transup:
 	pylupdate5 -noobsolete $(UI_SOURCES) $(PLUGINNAME).py gui/*.py core/*.py -ts i18n/$(PLUGINNAME)_fr.ts
 
-deploy:
+deploy: compile
 	mkdir -p $(CONFIGPATH)/$(DEPLOY_PATH)/$(PLUGINNAME)
 	cp -rvf * $(CONFIGPATH)/$(DEPLOY_PATH)/$(PLUGINNAME)/
