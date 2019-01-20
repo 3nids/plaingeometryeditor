@@ -34,7 +34,7 @@ from qgis.PyQt.QtGui import QIcon, QDesktopServices
 from .gui.identifygeometry import IdentifyGeometry
 from .gui.geomeditordialog import GeomEditorDialog
 
-import resources
+from .resources import *
 
 
 class PlainGeometryEditor(object):
@@ -50,7 +50,7 @@ class PlainGeometryEditor(object):
         self.helpAction.triggered.connect(lambda: QDesktopServices().openUrl(QUrl("http://3nids.github.io/plaingeometryeditor")))
         self.iface.addPluginToMenu("&Plain Geometry Editor", self.helpAction)
         # map tool action
-        self.mapToolAction = QAction(QIcon(":/icon1.svg"),
+        self.mapToolAction = QAction(QIcon(":/icon.svg"),
                                      "Plain Geometry Editor", self.iface.mainWindow())
         self.mapToolAction.setCheckable(True)
         self.mapTool = IdentifyGeometry(self.mapCanvas)

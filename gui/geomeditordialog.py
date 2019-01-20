@@ -32,7 +32,7 @@ from qgis.PyQt.QtWidgets import QGridLayout, QDialog
 from qgis.core import Qgis, QgsGeometry, QgsWkbTypes
 from qgis.gui import QgsRubberBand
 
-from ..qgissettingmanager import SettingDialog
+from ..qgissettingmanager import *
 from ..core.mysettings import MySettings
 from ..geomeditors import GeomEditor, CellEditor, WkbEditor, WktEditor
 from ..ui.ui_geomeditor import Ui_GeomEditor
@@ -43,7 +43,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         QDialog.__init__(self, parent)
         self.setupUi(self)
         self.settings = MySettings()
-        SettingDialog.__init__(self, self.settings)
+        SettingDialog.__init__(self, setting_manager=self.settings, mode=UpdateMode.WidgetUpdate)
         self.mapCanvas = mapCanvas
         self.setAttribute(Qt.WA_DeleteOnClose)
         self.feature = feature

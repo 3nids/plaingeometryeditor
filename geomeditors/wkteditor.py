@@ -39,19 +39,19 @@ from .geomeditor import GeomEditor
 import re
 # Character in a point
 # a point, a digit or a white space
-inPointReg = re.compile("(-|\d|\s|\.)")
+inPointReg = re.compile(r"(-|\d|\s|\.)")
 # Right delimiter of a point
 # i.e. comma or right parenthesis some digits or not, eventually a point plus some digits,
 # eventually some space plus a number and finally a comma or a right parenthesis
 # dont forget it can start with a point!
-rightPointDelimiter = re.compile("-?\d*(\.\d+)?(\s+-?\d+(\.\d+)?)?(,|\))")
+rightPointDelimiter = re.compile(r"-?\d*(\.\d+)?(\s+-?\d+(\.\d+)?)?(,|\))")
 # Left delimiter of a point
 # i.e. a comma or a left parenthesis, some digits or not, eventually a point plus some digits,
 # eventually some space plus a number and the end of string
 # dont forget it can end by a point!
-leftPointDelimiter = re.compile("(,|\()\s*-?\d+(\.\d*)?(\s+-?\d+(\.\d*)?)?$")
+leftPointDelimiter = re.compile(r"(,|\()\s*-?\d+(\.\d*)?(\s+-?\d+(\.\d*)?)?$")
  # Look for middle space separator of a point
-spacePointReg = re.compile("\s*-?\d+(\.\d+)?\s+")
+spacePointReg = re.compile(r"\s*-?\d+(\.\d+)?\s+")
 
 
 class WktEditor(QTextEdit, GeomEditor):

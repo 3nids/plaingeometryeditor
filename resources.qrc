@@ -3,6 +3,5 @@
         <file alias="icon.png">icons/plaingeometryeditor-128.png</file>
         <file alias="icon.svg">icons/plaingeometryeditor.svg</file>
         <file alias="help.svg">icons/help.svg</file>
-        <file alias="icon1.svg">icons/g.svg</file>
     </qresource>
 </RCC>
