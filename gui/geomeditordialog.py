@@ -49,7 +49,8 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
         self.feature = feature
         self.initialGeometry = QgsGeometry(feature.geometry())
         self.layer = layer
-
+        self.init_widgets()
+        
         # close if no geom, hide "sketch current point" if not needed
         geomType = layer.geometryType()
         if not geomType in (QgsWkbTypes.PointGeometry, QgsWkbTypes.LineGeometry, QgsWkbTypes.PolygonGeometry):

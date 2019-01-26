@@ -33,11 +33,9 @@ from ..qgissettingmanager import *
 
 pluginName = "plaingeometryeditor"
 
-
 class MySettings(SettingManager):
     def __init__(self):
         SettingManager.__init__(self, pluginName)
-
         self.add_setting(Bool("sketchGeometry", Scope.Global,  True))
         self.add_setting(Color("featureRubberColor", Scope.Global,  QColor(0, 0, 255)))
         self.add_setting(Double("featureRubberSize", Scope.Global,  .6))
