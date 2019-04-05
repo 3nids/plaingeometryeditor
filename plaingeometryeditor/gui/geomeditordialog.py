@@ -27,15 +27,18 @@ from builtins import str
 #
 #---------------------------------------------------------------------
 
+import os
 from qgis.PyQt.QtCore import Qt, pyqtSlot
 from qgis.PyQt.QtWidgets import QGridLayout, QDialog
-from qgis.core import Qgis, QgsGeometry, QgsWkbTypes
+from qgis.PyQt.uic import loadUiType
+from qgis.core import QgsGeometry, QgsWkbTypes
 from qgis.gui import QgsRubberBand
 
 from ..qgissettingmanager import *
 from ..core.mysettings import MySettings
 from ..geomeditors import GeomEditor, CellEditor, WkbEditor, WktEditor
-from ..ui.ui_geomeditor import Ui_GeomEditor
+
+Ui_GeomEditor, _ = loadUiType(os.path.join(os.path.dirname(__file__), '../ui/geomeditor.ui'))
 
 
 class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):

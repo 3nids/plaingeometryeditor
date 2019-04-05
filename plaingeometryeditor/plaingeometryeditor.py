@@ -34,7 +34,7 @@ from qgis.PyQt.QtGui import QIcon, QDesktopServices
 from .gui.identifygeometry import IdentifyGeometry
 from .gui.geomeditordialog import GeomEditorDialog
 
-from .resources import *
+from .resources_rc import *
 
 
 class PlainGeometryEditor(object):
