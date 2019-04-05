@@ -31,7 +31,7 @@ from builtins import str
 from qgis.PyQt.QtCore import Qt, pyqtSignal
 from qgis.PyQt.QtWidgets import QTextEdit
 from qgis.PyQt.QtGui import QTextCursor
-from qgis.core import QgsGeometry, QgsPointXY, Qgis, QgsWkbTypes
+from qgis.core import QgsGeometry, QgsPointXY, QgsWkbTypes
 
 from .geomeditor import GeomEditor
 
