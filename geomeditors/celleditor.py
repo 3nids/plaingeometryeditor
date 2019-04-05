@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #-----------------------------------------------------------
 #
 # Plain Geometry Editor is a QGIS plugin to edit geometries
@@ -26,11 +27,11 @@
 #
 #---------------------------------------------------------------------
 
-from PyQt4.QtCore import pyqtSignal
-from PyQt4.QtGui import QTextEdit
+from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtWidgets import QTextEdit
 from qgis.core import QgsGeometry
 
-from geomeditor import GeomEditor
+from .geomeditor import GeomEditor
 
 
 class CellEditor(QTextEdit, GeomEditor):

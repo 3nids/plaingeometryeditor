@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #-----------------------------------------------------------
 # 
 # Plain Geometry Editor
@@ -24,5 +25,5 @@
 #---------------------------------------------------------------------
 
 def classFactory(iface):
-    from plaingeometryeditor import PlainGeometryEditor
+    from .plaingeometryeditor import PlainGeometryEditor
     return PlainGeometryEditor(iface)

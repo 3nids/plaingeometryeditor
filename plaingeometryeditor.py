@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from builtins import object
 #-----------------------------------------------------------
 #
 # Plain Geometry Editor is a QGIS plugin to edit geometries
@@ -25,16 +27,17 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 #---------------------------------------------------------------------
-from PyQt4.QtCore import QUrl
-from PyQt4.QtGui import QAction, QIcon, QDesktopServices
+from qgis.PyQt.QtCore import QUrl
+from qgis.PyQt.QtWidgets import QAction
+from qgis.PyQt.QtGui import QIcon, QDesktopServices
 
-from gui.identifygeometry import IdentifyGeometry
-from gui.geomeditordialog import GeomEditorDialog
+from .gui.identifygeometry import IdentifyGeometry
+from .gui.geomeditordialog import GeomEditorDialog
 
-import resources
+from .resources import *
 
 
-class PlainGeometryEditor():
+class PlainGeometryEditor(object):
 
     def __init__(self, iface):
         self.iface = iface
@@ -43,11 +46,11 @@ class PlainGeometryEditor():
    
     def initGui(self):
         # help
-        self.helpAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/help.svg"), "Help", self.iface.mainWindow())
+        self.helpAction = QAction(QIcon(":/help.svg"), "Help", self.iface.mainWindow())
         self.helpAction.triggered.connect(lambda: QDesktopServices().openUrl(QUrl("http://3nids.github.io/plaingeometryeditor")))
         self.iface.addPluginToMenu("&Plain Geometry Editor", self.helpAction)
         # map tool action
-        self.mapToolAction = QAction(QIcon(":/plugins/plaingeometryeditor/icons/plaingeometryeditor.svg"),
+        self.mapToolAction = QAction(QIcon(":/icon.svg"),
                                      "Plain Geometry Editor", self.iface.mainWindow())
         self.mapToolAction.setCheckable(True)
         self.mapTool = IdentifyGeometry(self.mapCanvas)
@@ -70,5 +73,4 @@ class PlainGeometryEditor():
         dlg.show()
         # save dlg so it does not get out of scope and layer is properly disconnect
         self.dlgs.append(dlg)
-
 

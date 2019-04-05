@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from builtins import str
 #-----------------------------------------------------------
 #
 # Plain Geometry Editor is a QGIS plugin to edit geometries
@@ -26,29 +28,30 @@
 #
 #---------------------------------------------------------------------
 
-from PyQt4.QtCore import Qt, pyqtSignal
-from PyQt4.QtGui import QTextCursor, QTextEdit
-from qgis.core import QgsGeometry, QgsPoint, QGis
+from qgis.PyQt.QtCore import Qt, pyqtSignal
+from qgis.PyQt.QtWidgets import QTextEdit
+from qgis.PyQt.QtGui import QTextCursor
+from qgis.core import QgsGeometry, QgsPointXY, Qgis, QgsWkbTypes
 
-from geomeditor import GeomEditor
+from .geomeditor import GeomEditor
 
 # Regular expressions to detect the point in the WKT
 import re
 # Character in a point
 # a point, a digit or a white space
-inPointReg = re.compile("(-|\d|\s|\.)")
+inPointReg = re.compile(r"(-|\d|\s|\.)")
 # Right delimiter of a point
 # i.e. comma or right parenthesis some digits or not, eventually a point plus some digits,
 # eventually some space plus a number and finally a comma or a right parenthesis
 # dont forget it can start with a point!
-rightPointDelimiter = re.compile("-?\d*(\.\d+)?(\s+-?\d+(\.\d+)?)?(,|\))")
+rightPointDelimiter = re.compile(r"-?\d*(\.\d+)?(\s+-?\d+(\.\d+)?)?(,|\))")
 # Left delimiter of a point
 # i.e. a comma or a left parenthesis, some digits or not, eventually a point plus some digits,
 # eventually some space plus a number and the end of string
 # dont forget it can end by a point!
-leftPointDelimiter = re.compile("(,|\()\s*-?\d+(\.\d*)?(\s+-?\d+(\.\d*)?)?$")
+leftPointDelimiter = re.compile(r"(,|\()\s*-?\d+(\.\d*)?(\s+-?\d+(\.\d*)?)?$")
  # Look for middle space separator of a point
-spacePointReg = re.compile("\s*-?\d+(\.\d+)?\s+")
+spacePointReg = re.compile(r"\s*-?\d+(\.\d+)?\s+")
 
 
 class WktEditor(QTextEdit, GeomEditor):
@@ -67,12 +70,12 @@ class WktEditor(QTextEdit, GeomEditor):
     def getGeom(self):
         try:
             geoText = self.toPlainText()
-            return QgsGeometry().fromWkt(unicode(geoText))
+            return QgsGeometry().fromWkt(str(geoText))
         except:
             return None
 
     def setGeom(self, geometry):
-        self.setText(geometry.exportToWkt())
+        self.setText(geometry.asWkt())
 
     def layerEditable(self):
         layerIsEditable = self.layer.isEditable()
@@ -85,7 +88,7 @@ class WktEditor(QTextEdit, GeomEditor):
         self.geometryChanged.emit(geom)
 
     def emitCurrentPoint(self):
-        if self.geomType == QGis.Point:
+        if self.geomType == QgsWkbTypes.PointGeometry:
             return
         geoText = self.toPlainText()
         cursor = self.textCursor()
@@ -119,6 +122,6 @@ class WktEditor(QTextEdit, GeomEditor):
                     if mm:
                         x = float(pointText[:mm.end()])
                         y = float(pointText[mm.end():])
-                        currPointGeom = QgsGeometry().fromPoint(QgsPoint(x, y))
+                        currPointGeom = QgsGeometry().fromPointXY(QgsPointXY(x, y))
                         #print "point ",x,y
         self.currentPointChanged.emit(currPointGeom)

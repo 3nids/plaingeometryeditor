@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #-----------------------------------------------------------
 #
 # Plain Geometry Editor is a QGIS plugin to edit geometries
@@ -26,12 +27,12 @@
 #
 #---------------------------------------------------------------------
 
-from PyQt4.QtCore import pyqtSignal
-from PyQt4.QtGui import QPixmap, QCursor
+from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtGui import QPixmap, QCursor
 from qgis.core import QgsVectorLayer, QgsFeature
 from qgis.gui import QgsMapToolIdentify
 
-from cursor import Cursor
+from .cursor import Cursor
 
 
 class IdentifyGeometry(QgsMapToolIdentify):

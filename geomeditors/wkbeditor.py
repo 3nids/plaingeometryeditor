@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from builtins import str
 #-----------------------------------------------------------
 #
 # Plain Geometry Editor is a QGIS plugin to edit geometries
@@ -25,16 +27,15 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 #---------------------------------------------------------------------
-from PyQt4.QtCore import pyqtSignal
-from PyQt4.QtGui import QTextEdit
+from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtWidgets import QTextEdit
 from qgis.core import QgsGeometry
 
-from geomeditor import GeomEditor
+from .geomeditor import GeomEditor
 
 import binascii
 
 SRID_FLAG = 0x20000000
-
 
 class WkbEditor(QTextEdit, GeomEditor):
     currentPointChanged = pyqtSignal(QgsGeometry)
@@ -49,7 +50,7 @@ class WkbEditor(QTextEdit, GeomEditor):
         self.layerEditable()
 
     def getGeom(self):
-            geoText = unicode(self.toPlainText())
+            geoText = self.toPlainText()
             geom = self.wkb2qgis(geoText)
             if geom.isGeosValid():
                 return geom
@@ -57,7 +58,7 @@ class WkbEditor(QTextEdit, GeomEditor):
                 return None
 
     def setGeom(self, geometry):
-        hexText = binascii.b2a_hex(geometry.asWkb())
+        hexText = binascii.b2a_hex(geometry.asWkb()).decode("utf-8")
         self.setText(hexText)
 
     def layerEditable(self):
@@ -86,11 +87,11 @@ class WkbEditor(QTextEdit, GeomEditor):
         wkb = binascii.a2b_hex("%08x" % value)
         wkb = wkb[::-1]
         wkb = binascii.b2a_hex(wkb)
-        return wkb
+        return wkb.decode("UTF-8")
 
     def decodeBinary(self, wkb):
         """Decode the binary wkb and return as a hex string"""
         value = binascii.a2b_hex(wkb)
         value = value[::-1]
         value = binascii.b2a_hex(value)
-        return value
+        return value.decode("UTF-8")

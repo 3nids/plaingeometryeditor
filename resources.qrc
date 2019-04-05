@@ -1,7 +1,7 @@
 <RCC>
-    <qresource prefix="/plugins/plaingeometryeditor" >
-        <file>icons/plaingeometryeditor-128.png</file>
-        <file>icons/plaingeometryeditor.svg</file>
-        <file>icons/help.svg</file>
+    <qresource prefix="/">
+        <file alias="icon.png">icons/plaingeometryeditor-128.png</file>
+        <file alias="icon.svg">icons/plaingeometryeditor.svg</file>
+        <file alias="help.svg">icons/help.svg</file>
     </qresource>
 </RCC>
