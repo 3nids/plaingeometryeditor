@@ -1,0 +1,41 @@
+language: python
+
+python:
+  - 3.5
+
+addons:
+  apt:
+    packages:
+      - pyqt5-dev-tools
+
+git:
+  submodules: false
+
+before_install:
+  - plugin_ci/scripts/fetch_submodules.sh
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - plugin_ci/compile/compile_resources.sh
+
+jobs:
+  include:
+    - stage: deploy
+      if: tag IS present
+      script: plugin_ci/release/release.sh
+
+env:
+  global:
+    # OSGEO credentials to release the plugin
+    # Generate with the following command for proper special characters support
+    # travis encrypt OSGEO_PASSWORD=\''Your super secret password!'\'
+    - OSGEO_USERNAME=3nids
+    - secure: "FGDDbMkw5FaPKnLd3F01QvRWQ3MXBcwwSVSTFY0LsTi1tjptcoAiCCDguL6+PS+1scTMgHO7QbLN9AVfToRkCliaBJFPI8xnviOOtR3KUAIdD/h7WzzD5sB1IYEJmZ3aexV53dE8VGdC5NDTCM1iujEuJq8SNSmZTmmaiT8yKzUE/Ds0oWJYF5gsqUoKv0YTpJ/wUdMa9jYOs7fiXOFn+5yuvS2bUIm/RCzAYQZseee1HXIgyV04OZzCWAOOfBnKJbfa9XDtu2AoEXIGNn+zjkSaroIAJ+XNTTSbywFnISux2Vc9j5+YYop2att69p904hySQLar+DTExexCtwKWmts9dBQNrnqGo0VfWQT1iyjwufsGbCKpTBT+ZEDHXn1hr9XdLKYMqvVGgPe+jF7YFJxlewBt6byktKyOFLsfLhUKpB+SPpzdyYioFsKs6+iUkOZTshFb3NCvpqgSJh7b3Ej3xTwFh/oCQD4s6HdG4o02i7BCLo2nP2r2XyECxkeOKvLDQBrCPSmeoeLqwLSwNJ+k9mg+AUR8DZy+j0+jV+z5CUPvs8CP/3Al/5ckXucj1C5bmI77KxE+tF0UrYGCY2j4n4SiyYEjqh4ff1rUKlxCTjU1rCRbOkjvGg6Qtu0+FAHpfwUg8gM0qAb6W9svjaNuYVcx2mr/x+xT8chPywc="
+
+    # GH_TOKEN for creating releases
+    # https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line
+    # authorize only "repo_deployment"
+    # travis encrypt GH_TOKEN="......"
+    - secure: "mUzOMXxiynVvH77TAOE5VAPtIvckzwG5og0+lW8u/S+FRSOYEev98c4rqSEKkVqlYHI2+FntfWgAqSAbqDc626lZJcMUatMH4nfxc4oha6A6y2qQ2OdBYiC3WXve7fE8hT9pNhlJhHHuRB5l+y1Rd0/pZH+TcBps+H6BrP79oj1P8h/IEVUfSFgMG1cHHuzEIRAKgrDROWm7DVZ09XXko4fvztxLQ3eiOLqUxRE7Yi7MvLksc3uSO86MGY1oVDm/F25x5WB9brIeTYBv3xxBM59sF9ZxNH/J9PynozDojuhGqQaPLmiLQTSIgilBF1el8cqBjflxij193VcuS0ELoifJ9iKveFy43VXvQn/47riBSvPQOYM3hTAToOPyHlTqptTKtDYQyF9T1azpiwIPT5rYrA3Jgsh27xayibSGwPdtJI54XMPAOiWRLnE1fdzKq05iFXsQ2mc9sUMzIbqK6Avu8HVrvSAYuFOdOEAYWddwh3BaxX5m65fG7vUeqVd27jImwcJjZ4nFxH5RAjsJPvZ1+DouQnAANFIeF4xoQuRN8vMXHX8VzEnoqi3Ekq6DntgoW4tyemnim/N/qvgBrsSfMomkRqZYntITIXRpwlTCuOKJEEeh9IimBThTuzsNqhlysSzurxcrdX3nq/cV0KqxckhL28iq/P+IBSOc3yE="

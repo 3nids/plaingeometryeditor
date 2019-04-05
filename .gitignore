@@ -5,4 +5,5 @@ ui_*.py
 resources.py
 *.qm
 .DS_Store
+__pycache__
 
