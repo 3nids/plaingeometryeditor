@@ -1,4 +1,13 @@
 
+### For any newer version
+
+See the [release page](https://github.com/3nids/plaingeometryeditor/releases).
+
+
+### Version 3.0.0 04.04.2019
+
+* Release for QGIS 3
+
 ### Version 2.4.2 10.04.2014
 
 * fix crash when switching layer editing mode
