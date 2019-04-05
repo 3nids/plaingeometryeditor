@@ -12,7 +12,9 @@ git:
   submodules: false
 
 before_install:
-  - plugin_ci/scripts/fetch_submodules.sh
+  # cannot use SSH to fetch submodule
+  - sed -i 's#git@github.com:#https://github.com/#' .gitmodules
+  - git submodule update --init --recursive
 
 install:
   - pip install -r requirements.txt
