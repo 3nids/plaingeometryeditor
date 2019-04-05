@@ -1,6 +1,7 @@
 [general]
 name=Plain Geometry Editor
 description=Edit geometry of features using plain text (WKT, WKB)
+about=Edit geometry of features using plain text (WKT, WKB)
 version=dev
 qgisMinimumVersion=3.0
 author=Denis Rouzaud
