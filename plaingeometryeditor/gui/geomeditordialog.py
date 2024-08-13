@@ -169,7 +169,7 @@ class GeomEditorDialog(QDialog, Ui_GeomEditor, SettingDialog):
             
     def updateFeatureRubber(self):
         self.featureRubber.setColor(self.settings.value("featureRubberColor"))
-        self.featureRubber.setWidth(self.settings.value("featureRubberSize"))
+        self.featureRubber.setWidth(int(self.settings.value("featureRubberSize")))
         self.layer.triggerRepaint()
         
     def updateCurrentPointRubber(self):
